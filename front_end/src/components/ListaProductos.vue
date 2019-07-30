@@ -14,6 +14,7 @@
 
 <script >
 import axios from "axios";
+import { mapGetters, mapMutations} from 'vuex'
 export default{
 data (){
     return{
@@ -24,12 +25,25 @@ data (){
         ],
         productos :[]
     }
-},
-methods : {
+},computed:{
+        ...mapGetters([
+            'getProducts'
+        ]),
+        traeP(){
+            return this.getProducts
+        }
+    },
+methods:{
+        ...mapMutations([
+            'setProducts'
+        ]),
         getProductos(){
             const path =  'http://localhost:8000/api/v1.0/producto/'
             axios.get(path).then((response)=>{
                 this.productos = response.data
+                alert(response.data[1])
+                this.setProducts(response.data)
+                console.log(this.getProducts[0].nombre_producto)
             }).catch((err)=>{
                 console.log(err)
                 
@@ -37,7 +51,8 @@ methods : {
         }
     }, created(){
         this.getProductos()
-    }
+    },
+    
 }
 </script>
 

@@ -1,7 +1,7 @@
 <template >
 <div id="navbarx">
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-  <a class="navbar-brand" href="/">Tienda WEB XYZ</a>
+  <a class="navbar-brand" href="/">NEUROMARKET</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -21,13 +21,13 @@
           <div class="container">
             <div class="row">
               <div class="col-md-4">
-                <span class="text-uppercase text-white">Categorias</span>
+                <span class="text-uppercase text-black">Categorias</span>
                 <ul class="nav flex-column">
                 <li class="nav-item">
                   <a class="nav-link active" href="#">Categoria 1</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Categoria 2</a>
+                  <a class="nav-link text-black" href="#">Categoria 2</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="#">Categoria 3</a>
@@ -109,15 +109,34 @@
 
         </div>
       </li>
-      <li class="nav-item">
-        
-        <a class="nav-link" href="login" >Registrarse</a>
-      </li>
-    </ul>
-    <form class="form-inline my-2 my-lg-0">
+       <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="search" placeholder="Que estas buscando?" aria-label="">
       <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Buscar</button>
     </form>
+     
+       <li class="nav-item">
+        
+        
+      </li>
+       <li class="nav-item right" >
+        
+        <a class="nav-link" href="r" >Registrarse</a>
+      </li>
+     
+     
+       <li class="nav-item right" v-if="this.TraeNombre">
+        
+        <a class="nav-link" href="profile" >{{profile.first_name}}</a>
+      </li>
+      <li class="nav-item" v-if="this.TraeNombre">
+        <a class="nav-link" href="vende">Vender</a>
+      </li>
+      <li class="nav-item" v-else>
+        <a class="nav-link" href="login" >Login</a>
+      </li>
+     
+    </ul>
+   
   </div>
     
 
@@ -132,13 +151,29 @@
 
 import Cartas from '@/components/Cartas.vue'
 
-
+import { mapGetters, mapMutations} from 'vuex'
 export default {
+
+  data(){
+    return{
+
+    }
+  },
 components:{
   Cartas,
  
+},
+computed:{
+...mapGetters([
+  'profile'
+]),
+  TraeNombre(){
+    if(this.profile.first_name==""){
+      return false
+    }else{return true}
+    
 }
-}
+}}
 
 </script>
 
@@ -157,11 +192,11 @@ components:{
 
 .navbar .dropdown-menu {
   border:none;
-  background-color:deepskyblue!important;
+  background-color:#48D1CC!important;
 }
 
 /* breakpoint and up - mega dropdown styles */
-@media screen and (min-width: 992px) {
+@media screen and (min-width: 600px) {
   
   /* remove the padding from the navbar so the dropdown hover state is not broken */
 .navbar {
@@ -173,6 +208,7 @@ components:{
 .navbar .nav-item {
   padding:.5rem .5rem;
   margin:0 .25rem;
+  color:blue
 }
 
 /* makes the dropdown full width  */
@@ -187,7 +223,7 @@ components:{
   
   display:block;
   visibility: hidden;
-  opacity: 0;
+  opacity: 0.9;
   transition: visibility 0s, opacity 0.3s linear;
   
 }
@@ -199,7 +235,7 @@ components:{
 .navbar .dropdown:hover .dropdown-menu, .navbar .dropdown .dropdown-menu:hover {
   display:block;
   visibility: visible;
-  opacity: 1;
+  opacity: 2;
   transition: visibility 0s, opacity 0.3s linear;
 }
   
@@ -210,6 +246,9 @@ components:{
 
 }
 
+a{
+color:blue
+}
 
 
 

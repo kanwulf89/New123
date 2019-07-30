@@ -1,96 +1,120 @@
-<template>
+const newLocal=this;
+<template lang="html">
+  <div class="container signup" id="content">
+    
+      <div class="row p-4">
+        <div class="col-md-10 col-lg-5 mx-auto">
+          <div class="card shadow-lg bg-white">
+            <div class="card-header">
+              <h2>Sign Up</h2>
+            </div>
+            <div class="card-body">
+              <form v-on:submit.prevent="register">
+             
+                <div class="form-group">
+                  <input type="text" v-model="user.nombre" class="form-control" placeholder="First Name">
+                </div>
+                <div class="form-group">
+                  <input type="text" v-model="user.lastname" class="form-control" placeholder="Last Name">
+                </div>
+                <div class="form-group">
+                  <input type="text" v-model="user.cedula" class="form-control" placeholder="ID">
+                </div>
+                <div class="form-group">
+                  <input type="text" v-model="user.email" class="form-control" placeholder="Email">
+                </div>
+              
+                <div class="form-group">
+                  <input type="password" v-model="user.contra" class="form-control" placeholder="Password">
+                </div>
+                <div class="form-group">
+                  <input type="password" v-model="user.passConf" class="form-control" placeholder="Password Confirmation">
+                </div>
+                <div class="form-group">
+                  <button class="btn btn-success btn-block">Register</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
 
-  <div class="container">
-       <router-view/>
-    <b-form @submit="onSubmit" @reset="onReset" v-if="show">
-      <b-form-group
-        id="input-group-1"
-        label="Email Direccion:"
-        label-for="input-1"
-        description="Deje su correo electronico aqui."
-      >
-        <b-form-input
-          id="input-1"
-          v-model="form.email"
-          type="email"
-          required
-          placeholder="Digite aqui su email"
-        ></b-form-input>
-      </b-form-group>
-
-      <b-form-group id="input-group-2" label="Tu nombre:" label-for="input-2">
-        <b-form-input
-          id="input-2"
-          v-model="form.name"
-          required
-          placeholder="Digite su nombre"
-        ></b-form-input>
-      </b-form-group>
-
-      <b-form-group id="input-group-3" label="Food:" label-for="input-3">
-        <b-form-select
-          id="input-3"
-          v-model="form.food"
-          :options="foods"
-          required
-        ></b-form-select>
-      </b-form-group>
-
-      <b-form-group id="input-group-4">
-        <b-form-checkbox-group v-model="form.checked" id="checkboxes-4">
-          <b-form-checkbox value="me">Validar nombre</b-form-checkbox>
-          <b-form-checkbox value="that">validar cedula</b-form-checkbox>
-        </b-form-checkbox-group>
-      </b-form-group>
-
-      <b-button type="submit" variant="primary">Crear Perfil</b-button>
-      <b-button type="reset" variant="danger">Resetear</b-button>
-    </b-form>
-    <b-card class="mt-3" header="Registrados">
-      <pre class="m-0">{{ form }}</pre>
-    </b-card>
-  </div>
+      </div>
+    </div>
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        form: {
-          email: '',
-          name: '',
-          food: null,
-          checked: []
-        },
-        foods: [{ text: 'Select One', value: null }, 'Carrots', 'Beans', 'Tomatoes', 'Corn'],
-        show: true
-      }
-    },
-    methods: {
-      onSubmit(evt) {
-        evt.preventDefault()
-        alert(JSON.stringify(this.form))
+import Vue from 'vue';
+import Vuex from 'vuex';
+import Home from '@/components/Home.vue'
+import sawl from 'sweetalert'
+import { mapGetters, mapMutations} from 'vuex'
+
+
+export default {
+
+  data(){
+    return{
+      user: {
+       
+        nombre: null,
+        lastname: null,
+        cedula:null,
+         contra: null,
+        passConf: null,
+        email: null,
+       
+        
+       
+        
       },
-      onReset(evt) {
-        evt.preventDefault()
-        // Reset our form values
-        this.form.email = ''
-        this.form.name = ''
-        this.form.food = null
-        this.form.checked = []
-        // Trick to reset/clear native browser form validation state
-        this.show = false
-        this.$nextTick(() => {
-          this.show = true
-        })
-      }
+      err: false
     }
+  },computed:{
+      ...mapGetters([
+        'profile'
+      ])
+  },
+  methods: {
+    ...mapMutations([
+      'setFieldProfilename'
+    ]),
+    addUser: function(){
+      this.setFieldProfilename(this.user.nombre)
+    },
+    register(){
+      alert('hola mundo')
+       if(this.validacampos()){
+      this.$store.dispatch('api_register', this.user)
+      .then(response => {
+        alert(response)
+        this.setFieldProfilename(this.user.nombre)
+        this.$router.push({path: '/'});
+        sawl('Registrado de forma correcta','','success')
+        
+      })
+      .catch(err => {
+        this.err = true;
+        
+      })
+    }},
+    validacampos(){
+      
+      if(this.user.nombre==null || this.user.lastname==null || this.user.contra==null || this.user.email==null){
+
+               sawl('Error Llena todos los campos por favor','','error')
+
+        return false;
+      }else{ return true;}
+    },
+    
   }
+}
+
+
 </script>
-<style >
 
-.container{
-width: 50%;
-   }
-
+<style lang="css">
+  .signup{
+    margin-top: 50px;
+  }
 </style>

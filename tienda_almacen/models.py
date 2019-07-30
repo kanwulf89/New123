@@ -8,6 +8,11 @@ class Producto(models.Model):
     nombre_producto = models.CharField(max_length=100)
     cantidad_producto = models.IntegerField()
     precio_unidad = models.BigIntegerField()
+    photo = models.URLField(max_length=500, blank=True, default='')
+    descripcion = models.CharField(max_length=200, default="")
+    images = models.CharField(max_length=500, default='')
+
+
 
 class Categoria(models.Model):
     nombre_categoria = models.CharField(max_length=30)

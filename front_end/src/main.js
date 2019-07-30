@@ -6,7 +6,9 @@ import router from './router'
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-
+import {store} from './store/store'
+window.$ = require('jquery')
+window.JQuery = require('jquery')
 Vue.config.productionTip = false
 Vue.use(BootstrapVue);
 /* eslint-disable no-new */
@@ -14,6 +16,7 @@ Vue.use(BootstrapVue);
 
 new Vue({
   el: '#app',
+  store:store,
   router,
   components: { App },
   

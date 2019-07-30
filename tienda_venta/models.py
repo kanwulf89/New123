@@ -1,5 +1,4 @@
 from django.db import models
-
 from tienda_suscripcion.models import Tienda
 from tienda_almacen.models import Producto
 
@@ -8,20 +7,53 @@ from tienda_almacen.models import Producto
 
 class Cliente(models.Model):
     id_cliente = models.AutoField(primary_key=True)
-    cedula = models.CharField(max_length=30)
-    nombre = models.CharField(max_length=20)
-    direccion = models.CharField(max_length=20)
+    cedula = models.CharField(max_length=30,default="")
+    nombre = models.CharField(max_length=20, default="")
+    lastname = models.CharField(max_length=20, default="")
+    direccion = models.CharField(max_length=20, default="")
+    creditcard = models.IntegerField(default=0)
+    passw = models.CharField(max_length=30, default="")
+    email = models.CharField(max_length=20, default="")
+    seller = models.BooleanField(default=False)
+    phone = models.CharField(max_length=20, default="")
+  
+
+class Cliente2(models.Model):
+    cedula = models.CharField(primary_key=True, max_length=30)
+    nombre = models.CharField(max_length=20, default="")
+    lastname = models.CharField(max_length=20, default="")
+    email = models.EmailField(max_length=30, default="")
+    phone = models.CharField(max_length=20, default="")
+    seller = models.BooleanField(default=False)
+    contra = models.CharField(max_length=20,default="")
+
+    '''def retorna(self):
+        queryset = Cliente2.objects.filter(contra=self.contra)
+        return 'funciono'''
+
+
+   
 
 class Pedido(models.Model):
     numero_pedido = models.AutoField(primary_key=True)
     cliente = models.ForeignKey(Cliente, blank=True, on_delete=models.CASCADE)
+''' clases Oferta y Compra nuevos, que describen? existe una relacion articulo,tienda(vendedor) oferta'''
+''' Esta relacion me permite que para cada oferta en la tienda se tenga una clase compra que se asigna a oferta'''
+'''Esta compra la realiza un CLiente y a su vez la clase compra gerenra una factura y un envio'''
+class Oferta(models.Model):
+    numero_oferta = models.CharField(primary_key=True, max_length=20, default="")
+    booleano = models.BooleanField(default=False)
+
+class Compra(models.Model):
+    numero_compra = models.AutoField(primary_key=True)
+    oferta = models.ForeignKey(Oferta, blank=True, on_delete=models.CASCADE)
 
 class Factura(models.Model):
     id_factura = models.IntegerField(primary_key=True)
     date = models.DateField()
     precioTotal = models.BigIntegerField()
     nombre_cliente = models.CharField(max_length=20)
-    pedido = models.ForeignKey(Pedido, blank=True, on_delete=models.CASCADE, default=0)
+    comprax = models.ForeignKey(Compra, blank=True, on_delete=models.CASCADE, default=0)
 
 
 class Envio(models.Model):
@@ -37,6 +69,16 @@ class Venta(models.Model):
     productoy = models.ForeignKey(Producto, blank=True, on_delete=models.CASCADE)
     pedido = models.ForeignKey(Pedido, blank=True, on_delete=models.CASCADE, default=0)
 
+
+        
+'''MODELADO DE PRUEBA '''
+
+class ClienteOferta(models.Model):
+    clientez = models.ForeignKey(Cliente2, blank=True, on_delete=models.CASCADE)
+    productoz = models.ForeignKey(Producto, blank=True, on_delete=models.CASCADE)
+    ofertaz = models.ForeignKey(Oferta, blank=True, on_delete=models.CASCADE)
+
+    
 
 
 
