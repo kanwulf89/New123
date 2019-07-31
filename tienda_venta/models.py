@@ -82,5 +82,9 @@ class Compra(models.Model):
     numero_compra = models.CharField(max_length=30)
     oferta = models.CharField(max_length = 30)
 
+class OfertaProducto(models.Model):
+    tiendaz = models.ForeignKey(Cliente2, blank=True, on_delete=models.CASCADE)
+    productoz = models.ForeignKey(Producto, blank=True, on_delete=models.CASCADE)
+    ofertaz = models.AutoField(primary_key=True)
 
 

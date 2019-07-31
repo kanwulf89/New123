@@ -118,9 +118,12 @@
         
         
       </li>
-       <li class="nav-item right" >
-        
-        <a class="nav-link" href="r" >Registrarse</a>
+       <li class="nav-item right" v-if="this.TraeNombre">
+        <a></a>
+      
+      </li>
+      <li class="nav-item" v-else>
+          <a class="nav-link" href="r" >Registrarse</a>
       </li>
      
      
@@ -130,6 +133,9 @@
       </li>
       <li class="nav-item" v-if="this.TraeNombre">
         <a class="nav-link" href="vende">Vender</a>
+      </li>
+      <li class="nav-item" v-if="this.TraeNombre">
+        <button class="nav-link btn btn-primary" @click="deleteUser()">logout</button>
       </li>
       <li class="nav-item" v-else>
         <a class="nav-link" href="login" >Login</a>
@@ -150,7 +156,7 @@
 
 
 import Cartas from '@/components/Cartas.vue'
-
+import sawl from 'sweetalert'
 import { mapGetters, mapMutations} from 'vuex'
 export default {
 
@@ -162,10 +168,19 @@ export default {
 components:{
   Cartas,
  
+},methods:{
+...mapMutations([
+  'setFieldProfilename'
+]),deleteUser: function(){
+    this.setFieldProfilename("");
+    sawl('Usted cerro su sesion','','success')
+    this.$router.push({path: '/'});
+        }
 },
 computed:{
 ...mapGetters([
-  'profile'
+  'profile',
+
 ]),
   TraeNombre(){
     if(this.profile.first_name==""){

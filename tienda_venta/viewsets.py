@@ -1,11 +1,11 @@
 from rest_framework import viewsets
-from .serializer import Cliente2Serializer, LoginSerializer
+from .serializer import Cliente2Serializer, LoginSerializer, OfertaSerializer
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Cliente2
 
-from .models import Oferta
+from .models import OfertaProducto
 
 
 
@@ -19,6 +19,8 @@ class ClienteLogin(viewsets.ModelViewSet):
     serializer_class = LoginSerializer
 
 
-
+class OfertaViewSets(viewsets.ModelViewSet):
+    queryset = OfertaProducto.objects.all()
+    serializer_class = OfertaSerializer
 
 

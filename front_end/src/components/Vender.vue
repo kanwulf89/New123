@@ -51,10 +51,9 @@ export default {
      
       },
       oferta:{
+        tiendaz:null,
         productoz:null,
-        clientez:null,
-        ofertaz:"10101",
-        booleano:true
+       
 
       }}
     },computed:{
@@ -69,12 +68,13 @@ export default {
           this.$store.dispatch('api_photos',this.dat)
           .then(response =>{
             })
-           
+           this.registraOferta()
              
          },
          registraOferta(){
           this.oferta.productoz = this.dat.id_producto
-          this.oferta.clientez = this.profile.cedula
+          this.oferta.tiendaz = this.profile.cedula
+          alert(this.oferta.clientez + this.oferta.productoz)
           this.$store.dispatch('api_oferta',this.oferta)
           .then(response =>{
             alert('Se registro todo bien')

@@ -1,5 +1,7 @@
 from rest_framework import serializers
 from .models import Cliente2
+from .models import OfertaProducto
+
 
 
 from rest_framework.fields import CurrentUserDefault
@@ -19,4 +21,7 @@ class LoginSerializer(serializers.ModelSerializer):
 
 
        
-
+class OfertaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OfertaProducto
+        fields = '__all__'
