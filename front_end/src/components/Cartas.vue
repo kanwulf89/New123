@@ -12,8 +12,8 @@
     style="max-width: 20rem;">
     <form v-on:submit.prevent="Getid(i)">
       
-        <b-card-title>{{i.nombre_producto}}</b-card-title>
-        <b-card-img v-bind:src="i.images" fluid alt="Fluid image"></b-card-img>
+        <b-card-title>{{i.productos.nombre_producto}}</b-card-title>
+        <b-card-img v-bind:src="i.productos.images" fluid alt="Fluid image"></b-card-img>
        <b-card-text>Compralo Ahora!</b-card-text>
         <button class="btn btn-success" >Detalles</button>
     </form>
@@ -63,6 +63,7 @@ computed:{
     
   ]),trae(){
       return this.getProducts
+      alert('prueba1'+this.getProducts)
     },
     trae2(){
       return this.getCount

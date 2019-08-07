@@ -7,6 +7,7 @@ class ProductoViewSets(viewsets.ModelViewSet):
     
     '''queryset2 = Producto.objects.filter(id_producto=5)
     queryset2.delete()'''
+    
     serializer_class = ProductoSerializer
 
 

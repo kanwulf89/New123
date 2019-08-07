@@ -27,6 +27,9 @@ class Cliente2(models.Model):
     seller = models.BooleanField(default=False)
     contra = models.CharField(max_length=20,default="")
 
+    def __str__(self):
+        return self.nombre
+
     '''def retorna(self):
         queryset = Cliente2.objects.filter(contra=self.contra)
         return 'funciono'''
@@ -59,44 +62,33 @@ class Envio(models.Model):
     hora = models.DateTimeField()
     factura = models.ForeignKey(Factura, blank=True, on_delete=models.CASCADE)
 
-class Venta(models.Model):
-    tienday = models.ForeignKey(Tienda, blank=True, on_delete=models.CASCADE)
-    productoy = models.ForeignKey(Producto, blank=True, on_delete=models.CASCADE)
-    pedido = models.ForeignKey(Pedido, blank=True, on_delete=models.CASCADE, default=0)
 
 
         
 '''MODELADO DE PRUEBA '''
-
+'''
 class ClienteOferta(models.Model):
     tienday = models.ForeignKey(Cliente2, blank=True, on_delete=models.CASCADE)
     productoy = models.ForeignKey(Producto, blank=True, on_delete=models.CASCADE)
     ofertx = models.AutoField(primary_key=True, default=False)
-<<<<<<< HEAD
-
-class Oferta(models.Model):
-    booleano = models.BooleanField(default=False)
-    ofertaz = models.ForeignKey(ClienteOferta, blank=True, on_delete=models.CASCADE)
-
-=======
-
-class Oferta(models.Model):
-    booleano = models.BooleanField(default=False)
-    ofertaz = models.ForeignKey(ClienteOferta, blank=True, on_delete=models.CASCADE)
-
-
-class Compra(models.Model):
-    numero_compra = models.CharField(max_length=30)
-    oferta = models.CharField(max_length = 30)
->>>>>>> 9e4ccb3cd64a0c11aa533cfc17709c09d9667f44
+'''
 
 class Compra(models.Model):
     numero_compra = models.CharField(max_length=30)
     oferta = models.CharField(max_length = 30)
 
-class OfertaProducto(models.Model):
-    tiendaz = models.ForeignKey(Cliente2, blank=True, on_delete=models.CASCADE)
-    productoz = models.ForeignKey(Producto, blank=True, on_delete=models.CASCADE)
-    ofertaz = models.AutoField(primary_key=True)
 
 
+
+   
+
+class Oferta(models.Model):
+    booleano = models.BooleanField(default=False)
+    ofertaz = models.CharField(max_length=20)
+
+
+
+class PseudoJoin(models.Model):
+    vendedor = models.ForeignKey(Cliente2, on_delete=models.CASCADE)
+    productos = models.ForeignKey(Producto, on_delete=models.CASCADE)
+    pedidos = models.ForeignKey(Pedido, on_delete=models.CASCADE, null=True)

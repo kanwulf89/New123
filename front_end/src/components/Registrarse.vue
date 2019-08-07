@@ -82,7 +82,6 @@ export default {
       this.setFieldProfilename(this.user.nombre)
     },
     register(){
-      alert('hola mundo')
        if(this.validacampos()){
       this.$store.dispatch('api_register', this.user)
       .then(response => {
