@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios'
 import createPersistedState from 'vuex-persistedstate';
-
+import sawl from 'sweetalert'
 
 Vue.use(Vuex);
 
@@ -16,6 +16,7 @@ export const store = new Vuex.Store({
     products: [],
     detalle: null,
     count:[],
+    valida1:null
    
   },
   getters: {
@@ -64,17 +65,16 @@ export const store = new Vuex.Store({
   },
   actions: {
     api_register: (context, credentials) => {
-      return new Promise((resolve, reject) => {
         axios.post('http://localhost:8000/api/v1.0/clientes/', credentials)
           .then(res => {
-            console.log(res.data);
-            resolve(res);
+        
+           alert(res.data.cedula)
           })
           .catch(err => {
-            //console.log(err);
-            reject(err);
+           alert(err);
+            
           })
-      })
+     
     },
     setFieldProfile: (context) => {
       context.commit('setFieldProfile')
@@ -86,18 +86,23 @@ export const store = new Vuex.Store({
           .then(res => {
             resolve(res);
 
+          }).catch(err =>{
+            alert(err)
           })
       })
     },
     api_photos: (context, credentials) => {
       credentials.images = "../../static/"+credentials.images.name
       alert(credentials.images)
+      return new Promise((resolve, reject) =>{
      axios.post('http://localhost:8000/api/v1.0/producto/', credentials)
         .then(res => {
-          alert(res)
-        }).catch(err => {
-          console.log(err)
+          sawl('','','success')
+          resolve(res)
+        }).catch(ErrorEvent => {
+          sawl('Error','','error')
         })
+      })
         /*axios.post('http://localhost:8000/api/v1.0/Oferta/', credentials.id_producto)
         .then(res => {
           alert('Producto registrado Bien')
@@ -127,7 +132,7 @@ export const store = new Vuex.Store({
     },
     api_trae: (context) =>{
       return new Promise((resolve, reject) => { 
-        axios.get('http://localhost:8000/api/v1.0/listaproducto/')
+        axios.get('http://localhost:8000/api/v1.0/test2/')
       .then(res =>{
         resolve(res)})
         .catch(err => {

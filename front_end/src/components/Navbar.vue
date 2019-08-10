@@ -1,6 +1,6 @@
 <template >
 <div id="navbarx">
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+<nav class="navbar navbar-expand-lg navbar-dark bg-success">
   <a class="navbar-brand" href="/">NEUROMARKET</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -184,6 +184,7 @@ computed:{
 ]),
   TraeNombre(){
     if(this.profile.first_name==""){
+      alert(this.profile.first_name)
       return false
     }else{return true}
     
@@ -207,7 +208,7 @@ computed:{
 
 .navbar .dropdown-menu {
   border:none;
-  background-color:#48D1CC!important;
+  background-color:black!important;
 }
 
 /* breakpoint and up - mega dropdown styles */
@@ -223,7 +224,7 @@ computed:{
 .navbar .nav-item {
   padding:.5rem .5rem;
   margin:0 .25rem;
-  color:blue
+  color:black
 }
 
 /* makes the dropdown full width  */
@@ -262,7 +263,7 @@ computed:{
 }
 
 a{
-color:blue
+color:black
 }
 
 

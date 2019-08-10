@@ -35,6 +35,9 @@
 </template>
 <script>
 import { mapGetters} from 'vuex'
+import sawl from 'sweetalert'
+import axios from 'axios'
+
 export default {
  
     data() {
@@ -64,20 +67,26 @@ export default {
   },
      methods:{
        
-         register2(){
-          this.$store.dispatch('api_photos',this.dat)
-          .then(response =>{
-            })
-           this.registraOferta()
+      register2(){
+      
+        this.$store.dispatch('api_photos',this.dat)
+        .then(res => {
+          if(typeof res!='undefined'){
+            this.registraOferta()
+          }
+        }).catch(err => {
+          alert(err)
+        })
+          
+
              
          },
          registraOferta(){
           this.oferta.productos = this.dat.id_producto
           this.oferta.vendedor = this.profile.cedula
-          alert(this.oferta.vendedor + this.oferta.productos)
           this.$store.dispatch('api_oferta',this.oferta)
           .then(response =>{
-            alert('Se registro todo bien')
+           
           })
 
          },

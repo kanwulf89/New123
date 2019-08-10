@@ -5,17 +5,7 @@ from tienda_almacen.models import Producto
 # Create your models here.
 
 
-class Cliente(models.Model):
-    id_cliente = models.AutoField(primary_key=True)
-    cedula = models.CharField(max_length=30,default="")
-    nombre = models.CharField(max_length=20, default="")
-    lastname = models.CharField(max_length=20, default="")
-    direccion = models.CharField(max_length=20, default="")
-    creditcard = models.IntegerField(default=0)
-    passw = models.CharField(max_length=30, default="")
-    email = models.CharField(max_length=20, default="")
-    seller = models.BooleanField(default=False)
-    phone = models.CharField(max_length=20, default="")
+
   
 
 class Cliente2(models.Model):
@@ -39,7 +29,7 @@ class Cliente2(models.Model):
 
 class Pedido(models.Model):
     numero_pedido = models.AutoField(primary_key=True)
-    cliente = models.ForeignKey(Cliente, blank=True, on_delete=models.CASCADE)
+    cliente = models.ForeignKey(Cliente2, blank=True, on_delete=models.CASCADE)
 ''' clases Oferta y Compra nuevos, que describen? existe una relacion articulo,tienda(vendedor) oferta'''
 ''' Esta relacion me permite que para cada oferta en la tienda se tenga una clase compra que se asigna a oferta'''
 '''Esta compra la realiza un CLiente y a su vez la clase compra gerenra una factura y un envio'''
@@ -51,7 +41,7 @@ class Factura(models.Model):
     date = models.DateField()
     precioTotal = models.BigIntegerField()
     nombre_cliente = models.CharField(max_length=20)
-    comprax = models.CharField(max_length=20)
+    comprax = models.CharField(max_length=20, default="")
 
 
 class Envio(models.Model):

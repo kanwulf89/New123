@@ -47,6 +47,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import Home from '@/components/Home.vue'
 import sawl from 'sweetalert'
+import axios from 'axios'
 import { mapGetters, mapMutations} from 'vuex'
 
 
@@ -76,23 +77,25 @@ export default {
   },
   methods: {
     ...mapMutations([
-      'setFieldProfilename'
+      'setFieldProfilename',
+      'setProfileCedula'
     ]),
     addUser: function(){
       this.setFieldProfilename(this.user.nombre)
     },
     register(){
        if(this.validacampos()){
-      this.$store.dispatch('api_register', this.user)
-      .then(response => {
-        alert(response)
+      axios.post('http://localhost:8000/api/v1.0/clientes/', this.user)
+      .then(res => {
+        
         this.setFieldProfilename(this.user.nombre)
-        this.$router.push({path: '/'});
+        this.setProfileCedula(this.user.cedula)
+        this.$router.push({path: '/'})
         sawl('Registrado de forma correcta','','success')
         
       })
       .catch(err => {
-        this.err = true;
+        sawl('Esta id ya existe','','error')
         
       })
     }},

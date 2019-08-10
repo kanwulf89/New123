@@ -24,7 +24,8 @@ export default {
     },
     computed:{
         ...mapGetters([
-            'getProducts'
+            'getProducts',
+            'profile'
         ]),
         traerProducts(){
             return this.getProducts
@@ -42,6 +43,7 @@ export default {
                 this.setProducts(response.data)
 
                 alert(this.getProducts[0].productos.nombre_producto)
+                alert(this.profile.first_name)
             }).catch((err)=>{
                 console.log(err)
                 
@@ -57,8 +59,9 @@ export default {
             })
         }
     }, created(){
-        this.getProductos(),
+        this.getProductos()
         this.getProducts2()
+      
     }
 }
 </script>

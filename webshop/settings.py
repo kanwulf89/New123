@@ -88,8 +88,8 @@ WSGI_APPLICATION = 'webshop.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'webmulti',
-        'USER': 'chrisdavid',
+        'NAME': 'webshopnew',
+        'USER': 'holi',
         'PASSWORD': 'hi',
         'HOST': 'localhost',
         'PORT': '5432',

@@ -16,7 +16,7 @@
           <b-card-text>Precio Unidad:</b-card-text>
           <b-card-text>{{getDetails.productos.precio_unidad}}</b-card-text>
           <b-card-text>Vendedor</b-card-text>
-          <b-card-text>{{getDetails.vendedor.nombre}}</b-card-text>
+          <b-card-text>{{getCount.vendedor.nombre}}</b-card-text>
           <buttom class="btn btn-success">Comprar</buttom>
           
        
@@ -33,17 +33,26 @@
 import { mapGetters, mapMutations} from 'vuex'
 import Cartas from '@/components/Cartas.vue'
 export default {
-    methods:{},
+    methods:{
+      getProfiele(){
+        this.profile.frist
+      }
+    },
     computed:{
         ...mapGetters([
             'getDetails',
             'getPath',
-            'getProducts'
+            'getProducts',
+            'profile',
+            'getCount'
         ])
     },
     name: 'Detalles',
     components: {
         Cartas
+    },
+    created:{
+    
     }
 }
 </script>
