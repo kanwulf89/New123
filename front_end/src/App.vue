@@ -3,7 +3,7 @@
      <router-view/>
     <nave></nave>
    
-    
+    <fo></fo>
    
     
   </div>
@@ -11,10 +11,11 @@
 
 <script>
 import Navbar from '@/components/Navbar.vue'
+import Footer from '@/components/Footer.vue'
 
 export default {
   name: 'App',
-  components: {'nave':Navbar}
+  components: {'nave':Navbar, 'fo':Footer}
  
 }
 </script>

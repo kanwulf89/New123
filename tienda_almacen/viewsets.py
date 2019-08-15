@@ -7,7 +7,7 @@ class ProductoViewSets(viewsets.ModelViewSet):
     '''INventarse un trigger aca para llenar la tupla idproducto con la idauto de django'''
     '''queryset2 = Producto.objects.filter(id_producto=5)
     queryset2.delete()'''
-    
+   
     serializer_class = ProductoSerializer
 
 

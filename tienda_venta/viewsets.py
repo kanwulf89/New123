@@ -12,7 +12,7 @@ from .models import Oferta
 
 class ClienteViewSets(viewsets.ModelViewSet):
     queryset = Cliente2.objects.all()
-    queryset.delete()
+    
     serializer_class = Cliente2Serializer
 
 class ClienteLogin(viewsets.ModelViewSet):

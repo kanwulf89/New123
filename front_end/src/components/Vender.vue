@@ -3,14 +3,25 @@
        <form v-on:submit.prevent="register2">
            <fieldset>
                <legend>Especifique lo que desea vender</legend>
-               <label> Id del producto</label>
-               <input type="number" v-model="dat.id_producto" >
-               <label>Nombre Del Producto</label>
-               <input type="text" v-model="dat.nombre_producto" placeholder="Nombre Claro del Producto"><br>
-               <label>Cantidad del Producto</label>
-               <input placeholder="Cantidad" type="number" v-model="dat.cantidad_producto">
-               <label >Precio Del producto</label>
-               <input placeholder="$Valor$" type="number" v-model="dat.precio_unidad"><br>
+               <table style="margin: 0 auto;">
+                 <tr>
+                   <td><label> Código:</label></td>
+                   <td><input required type="number" v-model="dat.id_producto" ></td>
+                 </tr>
+                 <tr>
+                   <td><label>Nombre:</label></td>
+                   <td><input required  type="text" v-model="dat.nombre_producto" placeholder="Nombre Claro del Producto"></td>
+                 </tr>
+                 <tr>
+                   <td><label>Cantidad del Producto:</label></td>
+                   <td><input  required  placeholder="Cantidad" type="number" v-model="dat.cantidad_producto"></td>
+                 </tr>
+                 <tr>
+                   <td><label >Precio:</label></td>
+                   <td><input  required  placeholder="$Valor$" type="number" v-model="dat.precio_unidad"></td>
+                 </tr>
+                 
+               </table>    
              
                <label>Descripcion</label>
                <b-form-textarea

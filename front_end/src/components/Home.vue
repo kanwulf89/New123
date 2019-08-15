@@ -42,8 +42,8 @@ export default {
                // this.setProductos(response.data)
                 this.setProducts(response.data)
 
-                alert(this.getProducts[0].productos.nombre_producto)
-                alert(this.profile.first_name)
+               // alert(this.getProducts[0].productos.nombre_producto)
+                //alert(this.profile.first_name)
             }).catch((err)=>{
                 console.log(err)
                 
