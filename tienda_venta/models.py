@@ -19,10 +19,9 @@ class Cliente2(models.Model):
 
     def __str__(self):
         return self.nombre
+   
+        
 
-    '''def retorna(self):
-        queryset = Cliente2.objects.filter(contra=self.contra)
-        return 'funciono'''
 
 
    
@@ -80,5 +79,5 @@ class Oferta(models.Model):
 
 class PseudoJoin(models.Model):
     vendedor = models.ForeignKey(Cliente2, on_delete=models.CASCADE)
-    productos = models.ForeignKey(Producto, on_delete=models.CASCADE)
+    productos = models.ForeignKey(Producto, on_delete=models.CASCADE, null = True)
     pedidos = models.ForeignKey(Pedido, on_delete=models.CASCADE, null=True)

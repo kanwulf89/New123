@@ -13,6 +13,7 @@
 import Cartas from '@/components/Cartas.vue'
 import Navbar from '@/components/Navbar.vue'
 import axios from "axios";
+const MockAdapter = require("axios-mock-adapter");
 
 import { mapGetters, mapMutations} from 'vuex'
 
@@ -39,8 +40,7 @@ export default {
         getProductos(){
             const path =  'http://localhost:8000/api/v1.0/test1/'
             axios.get(path).then((response)=>{
-               // this.setProductos(response.data)
-                this.setProducts(response.data)
+               this.setProducts(response.data)
 
                // alert(this.getProducts[0].productos.nombre_producto)
                 //alert(this.profile.first_name)

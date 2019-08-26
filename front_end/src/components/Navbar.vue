@@ -11,106 +11,21 @@
       <li class="nav-item">
         <a class="nav-link" href="#">Opciones</a>
       </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Categorias
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-
-          
-          <div class="container">
-            <div class="row">
-              <div class="col-md-4">
-                <span class="text-uppercase text-black">Categorias</span>
-                <ul class="nav flex-column">
-                <li class="nav-item">
-                  <a class="nav-link active" href="#">Categoria 1</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link text-black" href="#">Categoria 2</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Categoria 3</a>
-                </li>
-              </ul>
-              </div>
-              <!-- /.col-md-4  -->
-              <div class="col-md-4">
-                <ul class="nav flex-column">
-                <li class="nav-item">
-                  <a class="nav-link active" href="#">Categoria 4</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Categoria 5</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Categoria 6</a>
-                </li>
-              </ul>
-              </div>
-              <!-- /.col-md-4  -->
-               <!-- /.col-md-4  -->
-              <div class="col-md-4">
-                <ul class="nav flex-column">
-                <li class="nav-item">
-                  <a class="nav-link active" href="#">Categoria 7</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Categoria 8</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Categoria 9</a>
-                </li>
-              </ul>
-              </div>
-              <!-- /.col-md-4  -->
-               <!-- /.col-md-4  -->
-              <div class="col-md-4">
-                <ul class="nav flex-column">
-                <li class="nav-item">
-                  <a class="nav-link active" href="#">Categoria 10</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Categoria 11</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Categoria 12</a>
-                </li>
-              </ul>
-              </div>
-              <!-- /.col-md-4  -->
-               <!-- /.col-md-4  -->
-              <div class="col-md-4">
-                <ul class="nav flex-column">
-                <li class="nav-item">
-                  <a class="nav-link active" href="#">Categoria 13</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Categoria 14</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Categoria 15</a>
-                </li>
-              </ul>
-              </div>
-              <!-- /.col-md-4  -->
-              <div class="col-md-4">
-                <a href="">
-                  <img src="https://dummyimage.com/200x100/ccc/000&text=image+link" alt="" class="img-fluid">
-                </a>
-                <p class="text-white">Espacio para imagen</p>
-
-              </div>
-              <!-- /.col-md-4  -->
-            </div>
-          </div>
-          <!--  /.container  -->
-
-
-        </div>
+     
+       <li class="nav-item dropdown">
+         
+       <b-form-select v-model="selected" :options="this.categorias"  @change="getProductos()"  class="nav-item"  >
+                  <!-- This slot appears above the options from 'options' prop -->
+                  <template slot="first">
+                    <option :value="null" disabled>CATEGORIAS</option>
+                    
+                  </template>
+                </b-form-select>   
       </li>
-       <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Que estas buscando?" aria-label="">
+     
+     
+       <form class="form-inline my-2 my-lg-0" v-on:submit.prevent="claveproductos()">
+      <input class="form-control mr-sm-2" type="search" v-model="clave" placeholder="Que estas buscando?" aria-label="">
       <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Buscar</button>
     </form>
      
@@ -158,11 +73,16 @@
 import Cartas from '@/components/Cartas.vue'
 import sawl from 'sweetalert'
 import { mapGetters, mapMutations} from 'vuex'
+import axios from "axios";
+
+
 export default {
 
   data(){
     return{
-
+      categorias:[],
+      selected: null,
+      clave:null
     }
   },
 components:{
@@ -170,25 +90,80 @@ components:{
  
 },methods:{
 ...mapMutations([
-  'setFieldProfilename'
+  'setFieldProfilename',
+   'setCategorias',
+   'setInfo'
 ]),deleteUser: function(){
     this.setFieldProfilename("");
     sawl('Usted cerro su sesion','','success')
     this.$router.push({path: '/'});
-        }
+        },
+          getCategorias(){
+      const path =  'http://localhost:8000/api/v1.0/categoria/'
+      axios.get(path).then((response)=>{
+          this.categorias = [];             
+          this.setCategorias(response.data)
+          for (var i = response.data.length - 1; i >= 0; i--) {
+            var categoria = { value: response.data[i].id_categoria, text: response.data[i].nombre_categoria };
+            this.categorias.push(categoria);
+          
+          }
+          console.log(this.categorias)
+      }).catch((err)=>{
+          console.log(err)
+          
+      })
+  },
+  getProductos(){
+  
+    const path = 'http://localhost:8000/buscaCate/'+this.selected+'/'
+    axios.get(path).then((res=>{
+      this.setInfo(res.data)
+      this.$router.push({path: '/busqueda'})
+       
+
+    }))
+  },
+  claveproductos(){
+    
+    if(this.clave !=null){
+      this.$store.dispatch('B_P',this.clave)
+      .then(res=>{
+        if(res.data!="No"){this.$router.push({path: '/busqueda'})
+        this.setInfo(res.data)}else{sawl('No se encontro el producto','','error')}
+        this.clave="";
+      })
+    }else{swal('Ingrese un nombre de producto','','error')}
+  }
+},created(){
+  this.getCategorias()
+  
 },
 computed:{
 ...mapGetters([
   'profile',
+  'getInfo'
+
+
 
 ]),
   TraeNombre(){
     if(this.profile.first_name==""){
-      alert(this.profile.first_name)
       return false
     }else{return true}
     
-}
+},
+ 
+  
+  /*
+ this.$store.dispatch('Pro_cate',this.selected)
+ .then(res=>{
+   alert(res.data)
+ }).catch(err => {
+          alert(err)
+        })*/
+
+
 }}
 
 </script>

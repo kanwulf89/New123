@@ -15,16 +15,34 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf.urls.static import static
+from rest_framework.urlpatterns import format_suffix_patterns
+from django.conf import settings
+from tienda_venta import views
+from tienda_venta.models import Cliente2
+from tienda_venta import views
 '''from django.conf.urls import url, include'''
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-     path('api/v1.0/', include('tienda_almacen.urls')),
-     path('api/v1.0/', include('tienda_venta.urls'))
+    path('api/v1.0/', include('tienda_almacen.urls')),
+    path('api/v1.0/', include('tienda_venta.urls')),
+    path('busca/<contra>/<cedula>/', views.ClienteLogin.as_view()),
+    path('buscaCate/<categoria>/', views.GetTodo.as_view()),
+    path('buscaProdu/<clave>/', views.GetProducto.as_view())
+  
+
 ]
+
+
 '''
+ path('busca', views.ClienteLogin.as_view())
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api/v1.0/',include('tienda_venta.urls'))
 ]'''
 
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    

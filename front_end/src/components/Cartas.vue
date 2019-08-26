@@ -3,9 +3,9 @@
   <div class="container" >
     <form>
       <fieldset>
-        <legend class="center-text">Electrodomesticos</legend>
+        <legend class="center-text"></legend>
     <b-card-group deck >
-       <b-card   v-for="(i,index) in trae" v-bind:index="index"  v-if="index < 4" :key="i.id" bg-variant="secondary" text-variant="white" header="NeuroMarket" class="text-center mb-2"
+       <b-card   v-for="(i,index) in trae" v-bind:index="index"  v-if="index < 4" :key="i.id" text-variant="black" header="NeuroMarket" class="text-center mb-2"
       
    
     img-alt="Image"
@@ -15,7 +15,7 @@
     <form v-on:submit.prevent="Getid(i)">
       
         <b-card-title>{{i.productos.nombre_producto}}</b-card-title>
-        <b-card-img v-bind:src="i.productos.images" fluid alt="Fluid image"></b-card-img>
+        <b-card-img  thumbnail fluid v-bind:src="i.productos.files[0].file"  ></b-card-img>
        <b-card-text>Compralo Ahora!</b-card-text>
         <button class="btn btn-success" >Detalles</button>
     </form>
@@ -24,7 +24,7 @@
       </fieldset>
     </form>
     <b-card-group deck >
-       <b-card   v-for="(j,index) in trae2" v-bind:index="index" v-if="index < 4" :key="j.id" bg-variant="secondary" text-variant="white" header="NeuroMarket" class="text-center mb-2"
+       <b-card   v-for="(j,index) in trae2" v-bind:index="index" v-if="index < 4" :key="j.id" bg-variant="" text-variant="black" header="NeuroMarket" class="text-center mb-2"
       
    
     img-alt="Image"
@@ -33,7 +33,7 @@
     style="max-width: 25rem;">
     <form v-on:submit.prevent="Getid(j)">
         <b-card-title>{{j.productos.nombre_producto}}</b-card-title>
-        <b-card-img v-bind:src="j.productos.images" fluid alt="Fluid image"></b-card-img>
+        <b-card-img thumbnail fluid  v-bind:src="j.productos.files[0].file" fluid alt="Fluid image"></b-card-img>
         <b-card-text>Compralo Ahora!</b-card-text>
         <button class="btn btn-success">Detalles</button>
     </form>

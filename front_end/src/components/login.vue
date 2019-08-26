@@ -14,7 +14,7 @@
                   <input v-model="valida.cedula" type="text" class="form-control" id="" placeholder="cedula">
                 </div>
                 <div class="form-group">
-                  <input v-model="valida.password" type="password" name="pass" value="" class="form-control" placeholder="Password">
+                  <input v-model="valida.contra" type="text" name="pass" value="" class="form-control" placeholder="Password">
                 </div>
                 <div class="form-group">
                   <button class="btn btn-success btn-block">Entrar</button>
@@ -41,7 +41,8 @@
 
 <script>
 import sawl from 'sweetalert'
-import { mapGetteres, mapMutations} from 'vuex'
+import { mapGetters, mapMutations} from 'vuex'
+import axios from "axios";
 
 export default {
   data(){
@@ -49,7 +50,7 @@ export default {
 
       valida: {
         cedula: null,
-        password: null
+        contra: null
 
       },
       err: false
@@ -59,21 +60,48 @@ export default {
      
     ...mapMutations([
       'setFieldProfilename',
-      'setProfileCedula'
+      'setProfileCedula',
+      'setValida'
     ]),
-     Username(nombre){
-      this.setFieldProfilename(this.user.nombre)
-      alert('funciono')
-    },
+    ...mapGetters([
+      'getValida',
+      'profile'
+    ]),
+     
     login(){
+
+      /*
+      const envia = {cedula:"123", contra:"123"}
+      const data = Object.assign(envia)
+      var request = require("request");
+
+    var options = { method: 'GET',
+    url: 'http://localhost:8000/busca',
+    headers: 
+    { 
+     
+     'Content-Type': 'application/x-www-form-urlencoded' },
+     
+  form: {dat}};
+
+request(options, function (error, response, body) {
+  if (error) throw new Error(error);
+  console.log(response);
+  console.log(body);
+  console.log(body);
+});*/
+
+
+      
       this.$store.dispatch('api_login', this.valida)
-        .then(response => {
-          let data = response.data
+        .then(res => {
+          let dat = res.data[0]
            
-            if(this.valida.cedula == data.cedula){
-               sawl('Bienvenido a NUEROMARKET','','success')
-               this.setFieldProfilename(data.nombre)
-               this.setProfileCedula(data.cedula)
+            if(this.valida.cedula == dat.cedula){
+              
+               sawl('Bienvenido a NEUROMARKET','','success')
+               this.setFieldProfilename(dat.nombre)
+               this.setProfileCedula(dat.cedula)
                this.$router.push({path: '/'});
               
 

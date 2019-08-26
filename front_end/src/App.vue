@@ -3,7 +3,7 @@
      <router-view/>
     <nave></nave>
    
-    <fo></fo>
+   
    
     
   </div>

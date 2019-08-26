@@ -10,7 +10,7 @@ import Profile from '@/components/Profile.vue'
 import login from '@/components/login.vue'
 import Details from '@/components/Details.vue'
 import Vender from '@/components/Vender.vue'
-
+import Busqueda from '@/components/Busqueda.vue'
 
 
 Vue.use(Router)
@@ -54,6 +54,11 @@ export default new Router({
       path: '/Vende',
       name: 'vende',
       component: Vender
+    },
+    {
+      path: '/busqueda',
+      name: 'busqueda',
+      component: Busqueda
     }
     
   ],

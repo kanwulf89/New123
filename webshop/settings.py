@@ -88,8 +88,8 @@ WSGI_APPLICATION = 'webshop.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'web',
-        'USER': 'i1234',
+        'NAME': 'test1',
+        'USER': 'univalle',
         'PASSWORD': 'hi',
         'HOST': 'localhost',
         'PORT': '5432',
@@ -135,3 +135,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+MEDIA_URL =  '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
