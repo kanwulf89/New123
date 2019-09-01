@@ -70,10 +70,71 @@ class GetProducto(APIView):
 
         parser_classes = [JSONParser]
 
-        products = PseudoJoin.objects.filter(productos__nombre_producto=clave)
+        products = PseudoJoin.objects.filter(productos__nombre_producto__iexact=clave)
 
         if not products:
             return Response("No")
         else:
             serializer = JoinFalso2(products, many=True, context={'request':request})
+            return Response(serializer.data)
+
+
+class GetRopa(APIView):
+
+    def get(self,request):
+
+        parser_classes = [JSONParser]
+       
+        snippets = PseudoJoin.objects.filter(productos__categoria_id__nombre_categoria="Ropa")
+
+        
+        if not snippets:
+            return Response("No")
+        else:
+            serializer = JoinFalso2(snippets, many=True, context={'request': request})
+            return Response(serializer.data)
+
+class GetVideoJuegos(APIView):
+
+    def get(self,request):
+
+        parser_classes = [JSONParser]
+       
+        snippets = PseudoJoin.objects.filter(productos__categoria_id__nombre_categoria="VideoJuegos")
+
+        
+        if not snippets:
+            return Response("No")
+        else:
+            serializer = JoinFalso2(snippets, many=True, context={'request': request})
+            return Response(serializer.data)
+
+class GetPhone(APIView):
+
+    def get(self,request):
+
+        parser_classes = [JSONParser]
+       
+        snippets = PseudoJoin.objects.filter(productos__categoria_id__nombre_categoria="Celulares")
+
+        
+        if not snippets:
+            return Response("No")
+        else:
+            serializer = JoinFalso2(snippets, many=True, context={'request': request})
+            return Response(serializer.data)
+
+class GetTeles(APIView):
+
+    def get(self,request):
+
+        parser_classes = [JSONParser]
+       
+        snippets = PseudoJoin.objects.filter(productos__categoria_id__nombre_categoria="Televisores")
+
+        
+        if not snippets:
+            return Response("No")
+        else:
+            serializer = JoinFalso2(snippets, many=True, context={'request': request})
             return Response(serializer.data)

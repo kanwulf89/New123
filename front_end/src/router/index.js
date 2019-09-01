@@ -11,6 +11,11 @@ import login from '@/components/login.vue'
 import Details from '@/components/Details.vue'
 import Vender from '@/components/Vender.vue'
 import Busqueda from '@/components/Busqueda.vue'
+import Pruebahome from '@/components/Pruebahome.vue'
+import Carrito from '@/components/Carrito.vue'
+import Footer from '@/components/Footer.vue'
+
+
 
 
 Vue.use(Router)
@@ -59,8 +64,26 @@ export default new Router({
       path: '/busqueda',
       name: 'busqueda',
       component: Busqueda
-    }
-    
+    },{
+    path: '/nuevo',
+    name: 'nuevo',
+    component: Pruebahome
+  },
+  {
+    path: '/carrito',
+    name:'carrito',
+    component: Carrito
+},
+{
+  path: '/foo',
+  name: 'foo',
+  component: Footer
+},
+{
+  path: '/test',
+  name: 'test',
+  component: Pruebahome
+}
   ],
   mode: 'history'
 })

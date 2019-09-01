@@ -4,8 +4,11 @@
     <form>
       <fieldset>
         <legend class="center-text"></legend>
-    <b-card-group deck >
-       <b-card   v-for="(i,index) in trae" v-bind:index="index"  v-if="index < 4" :key="i.id" text-variant="black" header="NeuroMarket" class="text-center mb-2"
+          <div class="container center-text">
+  <b-alert show variant="primary"><strong>Ropa</strong></b-alert>
+          </div>
+    <b-card-group deck>
+       <b-card   v-for="(i,index) in trae" v-bind:index="index"  v-if="index < 4" :key="i.id" text-variant="black" class="text-center mb-2"
       
    
     img-alt="Image"
@@ -15,6 +18,7 @@
     <form v-on:submit.prevent="Getid(i)">
       
         <b-card-title>{{i.productos.nombre_producto}}</b-card-title>
+        
         <b-card-img  thumbnail fluid v-bind:src="i.productos.files[0].file"  ></b-card-img>
        <b-card-text>Compralo Ahora!</b-card-text>
         <button class="btn btn-success" >Detalles</button>
@@ -23,8 +27,9 @@
     </b-card-group>
       </fieldset>
     </form>
+   <b-alert show variant="primary"><strong>VideoJuegos</strong></b-alert>
     <b-card-group deck >
-       <b-card   v-for="(j,index) in trae2" v-bind:index="index" v-if="index < 4" :key="j.id" bg-variant="" text-variant="black" header="NeuroMarket" class="text-center mb-2"
+       <b-card   v-for="(j,index) in trae2" v-bind:index="index" v-if="index < 4" :key="j.id" bg-variant="" text-variant="black" class="text-center mb-2"
       
    
     img-alt="Image"
@@ -39,6 +44,41 @@
     </form>
       </b-card>
     </b-card-group>
+    <b-alert show variant="primary"><strong>Celulares</strong></b-alert>
+    <b-card-group deck >
+       <b-card   v-for="(j,index) in trae3" v-bind:index="index" v-if="index < 4" :key="j.id" bg-variant="" text-variant="black" class="text-center mb-2"
+      
+   
+    img-alt="Image"
+    img-top
+    tag="article"
+    style="max-width: 25rem;">
+    <form v-on:submit.prevent="Getid(j)">
+        <b-card-title>{{j.productos.nombre_producto}}</b-card-title>
+        <b-card-img thumbnail fluid  v-bind:src="j.productos.files[0].file" fluid alt="Fluid image"></b-card-img>
+        <b-card-text>Compralo Ahora!</b-card-text>
+        <button class="btn btn-success">Detalles</button>
+    </form>
+      </b-card>
+    </b-card-group>
+     <b-alert show variant="primary"><strong>Televisores</strong></b-alert>
+    <b-card-group deck >
+       <b-card   v-for="(j,index) in trae4" v-bind:index="index" v-if="index < 4" :key="j.id" bg-variant="" text-variant="black" class="text-center mb-2"
+      
+   
+    img-alt="Image"
+    img-top
+    tag="article"
+    style="max-width: 25rem;">
+    <form v-on:submit.prevent="Getid(j)">
+        <b-card-title>{{j.productos.nombre_producto}}</b-card-title>
+        <b-card-img thumbnail fluid  v-bind:src="j.productos.files[0].file" fluid alt="Fluid image"></b-card-img>
+        <b-card-text>Compralo Ahora!</b-card-text>
+        <button class="btn btn-success">Detalles</button>
+    </form>
+      </b-card>
+    </b-card-group>
+    
   </div>
   
 </div>
@@ -61,7 +101,9 @@ export default {
 computed:{
   ...mapGetters([
     'getProducts',
-    'getCount'
+    'getCount',
+    'getPhones',
+    'getTelevisores',
     
   ]),trae(){
       return this.getProducts
@@ -69,6 +111,12 @@ computed:{
     },
     trae2(){
       return this.getCount
+    },
+    trae3(){
+      return this.getPhones
+    },
+    trae4(){
+      return this.getTelevisores;
     }
     
       

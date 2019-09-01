@@ -29,7 +29,13 @@ urlpatterns = [
     path('api/v1.0/', include('tienda_venta.urls')),
     path('busca/<contra>/<cedula>/', views.ClienteLogin.as_view()),
     path('buscaCate/<categoria>/', views.GetTodo.as_view()),
-    path('buscaProdu/<clave>/', views.GetProducto.as_view())
+    path('buscaProdu/<clave>/', views.GetProducto.as_view()),
+    path('traeRopa/', views.GetRopa.as_view()),
+    path('traeJuegos/', views.GetVideoJuegos.as_view()),
+    path('traeCelulares/', views.GetPhone.as_view()),
+    path('traeTeles/', views.GetTeles.as_view()),
+
+
   
 
 ]

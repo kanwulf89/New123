@@ -1,5 +1,9 @@
 <template >
+
 <div id="navbarx">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-success">
   <a class="navbar-brand" href="/">NEUROMARKET</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -17,7 +21,7 @@
        <b-form-select v-model="selected" :options="this.categorias"  @change="getProductos()"  class="nav-item"  >
                   <!-- This slot appears above the options from 'options' prop -->
                   <template slot="first">
-                    <option :value="null" disabled>CATEGORIAS</option>
+                    <option :value="null" disabled>Categorias</option>
                     
                   </template>
                 </b-form-select>   
@@ -40,11 +44,13 @@
       <li class="nav-item" v-else>
           <a class="nav-link" href="r" >Registrarse</a>
       </li>
-     
+     <li class="nav-item" v-if="this.TraeNombre">
+       <a class="nav-link" href="carrito">Carrito</a>
+     </li>
      
        <li class="nav-item right" v-if="this.TraeNombre">
         
-        <a class="nav-link" href="profile" >{{profile.first_name}}</a>
+       <strong> <a class="nav-link" href="profile" >{{profile.first_name}}</a></strong>
       </li>
       <li class="nav-item" v-if="this.TraeNombre">
         <a class="nav-link" href="vende">Vender</a>
@@ -92,9 +98,13 @@ components:{
 ...mapMutations([
   'setFieldProfilename',
    'setCategorias',
-   'setInfo'
+   'setInfo',
+   'setCarritox',
+   
+
 ]),deleteUser: function(){
     this.setFieldProfilename("");
+    //Aca borrar producto
     sawl('Usted cerro su sesion','','success')
     this.$router.push({path: '/'});
         },
@@ -134,7 +144,9 @@ components:{
         this.clave="";
       })
     }else{swal('Ingrese un nombre de producto','','error')}
-  }
+  },borraTodo(){
+        this.setCarritox("");
+      }
 },created(){
   this.getCategorias()
   
@@ -142,7 +154,8 @@ components:{
 computed:{
 ...mapGetters([
   'profile',
-  'getInfo'
+  'getInfo',
+  'getCarrito'
 
 
 

@@ -20,6 +20,9 @@ export const store = new Vuex.Store({
     categorias:[],
     valida:{cedula:null,contra:null},
     info:[],
+    autos:[],
+    phones:[],
+    tv:[],
    
   },
   getters: {
@@ -46,6 +49,15 @@ export const store = new Vuex.Store({
     },
     getValida: state =>{
       return state.valida.cedula
+    },
+    getCarrito: state =>{
+      return state.autos
+    },
+    getPhones: state =>{
+      return state.phones
+    },
+    getTelevisores: state =>{
+      return state.tv;
     }
     
   }, plugins: [createPersistedState()],
@@ -82,7 +94,21 @@ export const store = new Vuex.Store({
     },
     setValida: (state,field) => {
       state.valida = field
+    },
+    setCarrito: (state, field) => {
+      state.autos.push(field);
+    },
+    BorraElementoCarrito: (state,field) =>{
+      state.autos.splice(field,1)
+    },
+    setPhone: (state,field)=>{
+      state.phones = field;
+    },
+    setTelevisores: (state,field) =>{
+      state.tv = field;
     }
+    
+   
   },
   actions: {
     api_register: (context, credentials) => {
@@ -155,7 +181,7 @@ export const store = new Vuex.Store({
     },
     api_trae: (context) =>{
       return new Promise((resolve, reject) => { 
-        axios.get('http://localhost:8000/api/v1.0/test2/')
+        axios.get('http://localhost:8000/traeJuegos/')
       .then(res =>{
         resolve(res)})
         .catch(err => {
@@ -181,6 +207,26 @@ export const store = new Vuex.Store({
           resolve(res)
         }).catch(err =>{
           console.log(err)
+        })
+      })
+    },
+    api_trea_phone: (context, credentials)=>{
+      return new Promise((resolve, reject)=>{
+        axios.get('http://localhost:8000/traeCelulares/')
+        .then(res=>{
+          resolve(res)
+        }).catch(err =>{
+          console.log(err);
+        })
+      })
+    },
+    api_trea_tele: (context, credentials) =>{
+      return new Promise((resolve)=>{
+        axios.get('http://localhost:8000/traeTeles/')
+        .then(res =>{
+          resolve(res)
+        }).catch(res=>{
+          console.log(res)
         })
       })
     }
