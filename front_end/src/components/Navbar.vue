@@ -45,7 +45,8 @@
           <a class="nav-link" href="r" >Registrarse</a>
       </li>
      <li class="nav-item" v-if="this.TraeNombre">
-       <a class="nav-link" href="carrito">Carrito</a>
+       <a class="nav-link" href="carrito"> Shopping<i class="fas fa-cart-plus size:5x" size:5x id="carrito"></i></a>
+      
      </li>
      
        <li class="nav-item right" v-if="this.TraeNombre">
@@ -56,7 +57,7 @@
         <a class="nav-link" href="vende">Vender</a>
       </li>
       <li class="nav-item" v-if="this.TraeNombre">
-        <button class="nav-link btn btn-primary" @click="deleteUser()">logout</button>
+        <button class="nav-link btn btn-primary" @click="deleteUser()"><i class="fas fa-sign-out-alt"></i></button>
       </li>
       <li class="nav-item" v-else>
         <a class="nav-link" href="login" >Login</a>
@@ -100,11 +101,13 @@ components:{
    'setCategorias',
    'setInfo',
    'setCarritox',
+  
    
 
 ]),deleteUser: function(){
     this.setFieldProfilename("");
-    //Aca borrar producto
+    //Aca borrar producto, carrito de compras y detalles
+
     sawl('Usted cerro su sesion','','success')
     this.$router.push({path: '/'});
         },
@@ -155,7 +158,8 @@ computed:{
 ...mapGetters([
   'profile',
   'getInfo',
-  'getCarrito'
+  'getCarrito',
+  'getDetails'
 
 
 
@@ -253,7 +257,6 @@ computed:{
 a{
 color:black
 }
-
 
 
 </style>

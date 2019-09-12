@@ -1,5 +1,5 @@
 from rest_framework import routers
-from .viewsets import ProductoViewSets, ListaProductos2, FileGuarda, GuardaProductos
+from .viewsets import ProductoViewSets, ListaProductos2, FileGuarda, GuardaProductos,EditacantidaP
 from .viewsets import CategoriaViewSets
 
 
@@ -10,6 +10,7 @@ router.register('producto', ProductoViewSets)
 router.register('guardafoto', FileGuarda)
 router.register('gp',GuardaProductos)
 router.register('categoria', CategoriaViewSets)
+router.register('edicanti',EditacantidaP)
 
 
 urlpatterns = router.urls

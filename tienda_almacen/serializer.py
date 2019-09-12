@@ -19,6 +19,13 @@ class GuardaProducto(serializers.ModelSerializer):
         fields = ('url','id_producto','nombre_producto','cantidad_producto','precio_unidad','descripcion','categoria_id')
 
 
+class EditaCantidad(serializers.ModelSerializer):
+
+    class Meta:
+        model = Producto
+        fields = ['cantidad_producto']
+
+
 class FileSerializer(serializers.ModelSerializer):
    
     class Meta:

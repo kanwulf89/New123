@@ -1,6 +1,6 @@
 from rest_framework import viewsets
 from .models import Producto, File
-from .serializer import ProductoSerializer, FileSerializer, GuardaProducto
+from .serializer import ProductoSerializer, FileSerializer, GuardaProducto, EditaCantidad
 from rest_framework.parsers import FileUploadParser
 from rest_framework.response import Response
 from rest_framework import status
@@ -30,7 +30,9 @@ class FileGuarda(viewsets.ModelViewSet):
    
     serializer_class = FileSerializer
     
-
+class EditacantidaP(viewsets.ModelViewSet):
+    queryset = Producto.objects.all()
+    serializer_class = EditaCantidad
 
 class CategoriaViewSets(viewsets.ModelViewSet):
     queryset = Categoria.objects.all()   

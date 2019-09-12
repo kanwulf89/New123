@@ -12,6 +12,7 @@ export const store = new Vuex.Store({
   state: {
 
     profile: { first_name: null, last_name: null, phone: null, cedula: null, direccion: null, passw: null },
+    username:null,
     productos: { id_producto: null, nombre_producto: null, cantidad_producto: null, precio_unidad: null, descripcion: null, categoria_id: null },
     products: [],
     detalle: null,
@@ -23,6 +24,8 @@ export const store = new Vuex.Store({
     autos:[],
     phones:[],
     tv:[],
+    saldoTotal:0,
+    cantidadBorrada:0,
    
   },
   getters: {
@@ -31,6 +34,8 @@ export const store = new Vuex.Store({
     },
     getInfo: state =>{
       return state.info
+    },getUsername: state=>{
+      return state.username;
     },
     getProducts: state => {
       return state.products
@@ -58,9 +63,15 @@ export const store = new Vuex.Store({
     },
     getTelevisores: state =>{
       return state.tv;
+    },
+    getSaldo: state =>{
+      return state.saldoTotal;
+    },
+    getCantidadBorrada: state =>{
+      return state.cantidadBorrada;
     }
     
-  }, plugins: [createPersistedState()],
+  }, 
   mutations: {
     setProfile: (state, pro) => {
       state.profile = pro;
@@ -106,6 +117,15 @@ export const store = new Vuex.Store({
     },
     setTelevisores: (state,field) =>{
       state.tv = field;
+    },
+    setUsername: (state,field)=>{
+      state.username = field;
+    },
+    setSaldo: (state,field) =>{
+      state.saldoTotal = state.saldoTotal + field
+    },
+    setCantidadBorrada: (state,field) =>{
+      state.cantidadBorrada = field
     }
     
    
@@ -229,7 +249,38 @@ export const store = new Vuex.Store({
           console.log(res)
         })
       })
+    },
+    valida_stock:(context, credentials) =>{
+      return new Promise((resolve)=>{
+        axios.get('http://localhost:8000/stock/'+credentials+'/')
+        .then(res=>{
+          resolve(res)
+        }).catch(res=>{
+          console.log(res);
+        })
+      })
+    },
+
+    Resta_STock:(context,credentials) =>{
+      return new Promise((resolve)=>{
+        axios.patch('http://localhost:8000/edita/'+credentials.id_producto+'/'+credentials.cantidad_producto+'/')
+        .then(res=>{
+          resolve(res)
+        }).catch(err=>{
+          console.log(err)
+        })
+      })
+    },
+    restauraCantidad:(context,credentials)=>{
+      return new Promise((resolve)=>{
+        axios.patch('http://localhost:8000/restaura/'+credentials.id_producto+'/'+credentials.cantidad_producto+'/')
+        .then(res=>{
+          resolve(res)
+        }).catch(err=>{
+          console.log(err)
+        })
+      })
     }
     
-  }
+  },plugins: [createPersistedState()]
 })

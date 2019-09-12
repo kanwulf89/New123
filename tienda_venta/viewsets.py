@@ -18,7 +18,7 @@ class ClienteViewSets(viewsets.ModelViewSet):
 
     
     queryset = Cliente2.objects.all()
-    
+  
     serializer_class = Cliente2Serializer
 
 class ClienteLogin(viewsets.ModelViewSet):
@@ -52,5 +52,5 @@ class VistaPrueba(viewsets.ModelViewSet):
     serializer_class = JoinFalso2
 
 class VistaPrueba2(viewsets.ModelViewSet):
-    queryset = PseudoJoin.objects.all()[4:]
+    queryset = PseudoJoin.objects.all()
     serializer_class = JoinFalso2

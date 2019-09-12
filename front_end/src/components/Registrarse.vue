@@ -43,80 +43,70 @@ const newLocal=this;
 </template>
 
 <script>
-import Vue from 'vue';
-import Vuex from 'vuex';
-import Home from '@/components/Home.vue'
-import sawl from 'sweetalert'
-import axios from 'axios'
-import { mapGetters, mapMutations} from 'vuex'
-
+import Vue from "vue";
+import Vuex from "vuex";
+import Home from "@/components/Home.vue";
+import sawl from "sweetalert";
+import axios from "axios";
+import { mapGetters, mapMutations } from "vuex";
 
 export default {
-
-  data(){
-    return{
+  data() {
+    return {
       user: {
-       
         nombre: null,
         lastname: null,
-        cedula:null,
-         contra: null,
+        cedula: null,
+        contra: null,
         passConf: null,
-        email: null,
-       
-        
-       
-        
+        email: null
       },
       err: false
-    }
-  },computed:{
-      ...mapGetters([
-        'profile'
-      ])
+    };
+  },
+  computed: {
+    ...mapGetters(["profile"])
   },
   methods: {
-    ...mapMutations([
-      'setFieldProfilename',
-      'setProfileCedula'
-    ]),
-    addUser: function(){
-      this.setFieldProfilename(this.user.nombre)
+    ...mapMutations(["setFieldProfilename", "setProfileCedula"]),
+    addUser: function() {
+      this.setFieldProfilename(this.user.nombre);
     },
-    register(){
-       if(this.validacampos()){
-      axios.post('http://localhost:8000/api/v1.0/clientes/', this.user)
-      .then(res => {
-        
-        this.setFieldProfilename(this.user.nombre)
-        this.setProfileCedula(this.user.cedula)
-        this.$router.push({path: '/'})
-        sawl('Registrado de forma correcta','','success')
-        
-      })
-      .catch(err => {
-        sawl('Esta id ya existe','','error')
-        
-      })
-    }},
-    validacampos(){
-      
-      if(this.user.nombre==null || this.user.lastname==null || this.user.contra==null || this.user.email==null){
-
-               sawl('Error Llena todos los campos por favor','','error')
+    register() {
+      if (this.validacampos()) {
+        axios
+          .post("http://localhost:8000/api/v1.0/clientes/", this.user)
+          .then(res => {
+            this.setFieldProfilename(this.user.nombre);
+            this.setProfileCedula(this.user.cedula);
+            this.$router.push({ path: "/" });
+            sawl("Registrado de forma correcta", "", "success");
+          })
+          .catch(err => {
+            sawl("Esta id ya existe", "", "error");
+          });
+      }
+    },
+    validacampos() {
+      if (
+        this.user.nombre == null ||
+        this.user.lastname == null ||
+        this.user.contra == null ||
+        this.user.email == null
+      ) {
+        sawl("Error Llena todos los campos por favor", "", "error");
 
         return false;
-      }else{ return true;}
-    },
-    
+      } else {
+        return true;
+      }
+    }
   }
-}
-
-
+};
 </script>
 
 <style lang="css">
-  .signup{
-    margin-top: 50px;
-  }
+.signup {
+  margin-top: 50px;
+}
 </style>

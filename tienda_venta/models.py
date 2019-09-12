@@ -5,7 +5,10 @@ from tienda_almacen.models import Producto
 # Create your models here.
 
 
-
+class Pago(models.Model):
+    nombre_tarjeta = models.CharField(max_length=20)
+    numero_tarjeta = models.CharField(primary_key=True, max_length=40)
+    '''Acaba la llave foreanea del cliente'''
   
 
 class Cliente2(models.Model):
@@ -16,6 +19,7 @@ class Cliente2(models.Model):
     phone = models.CharField(max_length=20, default="")
     seller = models.BooleanField(default=False)
     contra = models.CharField(max_length=20,default="")
+    
 
     def __str__(self):
         return self.nombre
@@ -29,6 +33,7 @@ class Cliente2(models.Model):
 class Pedido(models.Model):
     numero_pedido = models.AutoField(primary_key=True)
     cliente = models.ForeignKey(Cliente2, blank=True, on_delete=models.CASCADE)
+    
 ''' clases Oferta y Compra nuevos, que describen? existe una relacion articulo,tienda(vendedor) oferta'''
 ''' Esta relacion me permite que para cada oferta en la tienda se tenga una clase compra que se asigna a oferta'''
 '''Esta compra la realiza un CLiente y a su vez la clase compra gerenra una factura y un envio'''

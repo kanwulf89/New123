@@ -42,3 +42,5 @@ class JoinFalso2(serializers.ModelSerializer):
     class Meta:
         model = PseudoJoin
         fields = ('id','url','vendedor','productos')
+
+    

@@ -1,178 +1,258 @@
 <template>
+  <div>
+    <b-container class="bv-example-row">
+      <br />
+      <h1>NEUROMAKER TIENDA DE TIENDAS</h1>
+      <br />
+      <br />
+      <br />
+      <b-row>
+        <b-col sm="8">
+          <div class="slider-size">
+            <b-carousel
+              id="carousel-1"
+              v-model="slide"
+              :interval="4000"
+              controls
+              indicators
+              background="#ababab"
+              img-width="1024"
+              img-height="480"
+              style="text-shadow: 1px 1px 2px #333;"
+              @sliding-start="onSlideStart"
+              @sliding-end="onSlideEnd"
+            >
+              <!-- Text slides with image -->
+              <b-carousel-slide v-for="item in productos" :key="item.id">
+                <b-card slot="img" alt="image slot" img-blank img-alt="Card image">
+                  <img id="foto1" v-bind:src="item.file" />
+                </b-card>
+              </b-carousel-slide>
+            </b-carousel>
+          </div>
+        </b-col>
+        <b-col sm="4">
+          <b-container class="bv-example-row">
+            <b-row>
+              <b-col>
+                <h1>
+                  <b-card-text>{{this.getDetails.productos.nombre_producto}}</b-card-text>
+                </h1>
+              </b-col>
+              <b-row></b-row>
+            </b-row>
+            <b-row>
+              <b-col>
+                <h1>
+                  <b-card-text>${{getDetails.productos.precio_unidad}}</b-card-text>
+                </h1>
+              </b-col>
+            </b-row>
+            <b-row>
+              <b-col>
+                <b-card-text>Cantidad disponible: {{getDetails.productos.cantidad_producto}}</b-card-text>
+              </b-col>
+            </b-row>
+            <b-row>
+              <b-col>
+                <b-card-text>Descripcion:</b-card-text>
+              </b-col>
+            </b-row>
+            <b-row>
+              <b-col>
+                <b-card-text>{{getDetails.productos.descripcion}}</b-card-text>
+              </b-col>
+            </b-row>
+            <b-row>
+              <b-col>
+                <b-card-text>Quien lo Vende: {{getDetails.vendedor.nombre}}</b-card-text>
+                <br />
+              </b-col>
+              <b-col>
+                  <b-card-text>
+                              Cantidad
+                              <input
+                                type="number"
+                                min="0"
+                                step="1"
+                                id="n1"
+                                v-bind:max="this.getDetails.productos.cantidad_producto"
+                                v-model="Productos.cantidad_producto"
+                              />
+                            </b-card-text>
+              </b-col>
+            </b-row>
+            <b-row>
+              <b-col lg="12" class="pb-2">
+                <b-button block variant="success" @click=" getProductosDetalles">Add a Carrito<i class="fas fa-cart-plus"></i></b-button>
+              </b-col>
+            </b-row>
+            <b-row>
+              <b-col>
+                <b-button variant="link">Detalles del Vendedor</b-button>
+              </b-col>
+            </b-row>
 
-<div>
-
-  <b-container class="bv-example-row">
-    <br>
-    <h1>NEUROMAKER TIENDA DE TIENDAS</h1><br><br><br>
-  <b-row>
-    <b-col sm="8">
-     <div class="slider-size">
-    <b-carousel
-      id="carousel-1"
-      v-model="slide"
-      :interval="4000"
-      controls
-      indicators
-      background="#ababab"
-      img-width="1024"
-      img-height="480"
-      style="text-shadow: 1px 1px 2px #333;"
-      @sliding-start="onSlideStart"
-      @sliding-end="onSlideEnd"
-    >
-      <!-- Text slides with image -->
-      <b-carousel-slide v-for="item in productos" :key="item.id">
-        <b-card
-          slot="img"
-          width="1024"
-          height="480"
-          v-bind:img-src="item.file"
-          alt="image slot"
-          img-blank 
-          img-alt="Card image"  style="height: 100%; width:100%" 
-        ></b-card>
-      </b-carousel-slide>
-
-    </b-carousel>
-
+            <b-row>
+              <b-col>
+                <form>
+                  <p class="clasificacion">
+                    <input id="radio1" type="radio" name="estrellas" value="5" />
+                    <!--
+                    -->
+                    <label for="radio1">★</label>
+                    <!--
+                    -->
+                    <input id="radio2" type="radio" name="estrellas" value="4" />
+                    <!--
+                    -->
+                    <label for="radio2">★</label>
+                    <!--
+                    -->
+                    <input id="radio3" type="radio" name="estrellas" value="3" />
+                    <!--
+                    -->
+                    <label for="radio3">★</label>
+                    <!--
+                    -->
+                    <input id="radio4" type="radio" name="estrellas" value="2" />
+                    <!--
+                    -->
+                    <label for="radio4">★</label>
+                    <!--
+                    -->
+                    <input id="radio5" type="radio" name="estrellas" value="1" />
+                    <!--
+                    -->
+                    <label for="radio5">★</label>
+                  </p>
+                </form>
+              </b-col>
+            </b-row>
+          </b-container>
+        </b-col>
+      </b-row>
+    </b-container>
   </div>
-    </b-col>
-    <b-col sm="4">
-   
-      <b-container class="bv-example-row">
-  <b-row>
-    <b-col>
-     <h1> <b-card-text>{{this.getDetails.productos.nombre_producto}}</b-card-text></h1>
-    </b-col>
-    <b-row></b-row>
-  </b-row>
-  <b-row>
-    <b-col>
- <h1><b-card-text>${{getDetails.productos.precio_unidad}}</b-card-text></h1>
-    </b-col>
-  </b-row>
-  <b-row>
-  <b-col>
-  <b-card-text>Cantidad disponible: {{getDetails.productos.cantidad_producto}}</b-card-text>
-  </b-col>
-  </b-row>
-  <b-row>
-    <b-col>
-       <b-card-text>Descripcion:</b-card-text>
-    </b-col>
-  </b-row>
-  <b-row>
-    <b-col>
-       <b-card-text>{{getDetails.productos.descripcion}}</b-card-text>
-    </b-col>
-  </b-row>
-  <b-row>
-    <b-col>
-       <b-card-text>Quien lo Vende: {{getDetails.vendedor.nombre}}</b-card-text><br>
-    </b-col>
-  </b-row>
-  <b-row>
-  <b-col lg="12" class="pb-2"><b-button block variant="success" @click=" getProductosDetalles">Comprar</b-button></b-col>
-</b-row>
-<b-row>
-  <b-col>
-      <b-button variant="link">Detalles del Vendedor</b-button>
-  </b-col>
-</b-row>
-
-  <b-row>
-    <b-col>
-     <form>
-  <p class="clasificacion">
-    <input id="radio1" type="radio" name="estrellas" value="5"><!--
-    --><label for="radio1">★</label><!--
-    --><input id="radio2" type="radio" name="estrellas" value="4"><!--
-    --><label for="radio2">★</label><!--
-    --><input id="radio3" type="radio" name="estrellas" value="3"><!--
-    --><label for="radio3">★</label><!--
-    --><input id="radio4" type="radio" name="estrellas" value="2"><!--
-    --><label for="radio4">★</label><!--
-    --><input id="radio5" type="radio" name="estrellas" value="1"><!--
-    --><label for="radio5">★</label>
-  </p>
-</form>
-    </b-col>
-  </b-row>
-</b-container>
-
-    </b-col>
-  </b-row>
-  </b-container>
-
-
- 
-</div>
-  
-
-
 </template>
 <script>
-import { mapGetters, mapMutations} from 'vuex'
-import Cartas from '@/components/Cartas.vue'
+import { mapGetters, mapMutations } from "vuex";
+import Cartas from "@/components/Cartas.vue";
+import JQuery from "jquery";
+let $ = JQuery;
+import sawl from "sweetalert";
+
 export default {
   data() {
-      return {
-        slide: 0,
-        sliding: null
-      }
-    },
-    methods:{
-      ...mapMutations([
-       'setCarrito',
-       'setCarritox',
-      ]),
-      getProfiele(){
-        this.profile.frist
+    return {
+      slide: 0,
+      sliding: null,
+      Productos:{
+        id_producto:null,
+        cantidad_producto:null,
       },
-      getProductosDetalles(){
-        alert('DETALLES'+this.getCarrito);
-        this.setCarrito(this.getDetails);
-        
-        alert('Lo que tiene carrito'+this.getCarrito[0].productos.nombre_producto)
-
-
-
-      },
-       onSlideStart(slide) {
-        this.sliding = true
-      },
-      onSlideEnd(slide) {
-        this.sliding = false
-      }
+      cantidadActual:0,
+    };
+  },
+  methods: {
+    ...mapMutations(["setCarrito", "setCarritox","setCantidadBorrada"]),
+    getProfiele() {
+      this.profile.frist;
+    },retornaCantidad() {
+      alert(this.getDetails.cantidad_producto)
+      return this.getDetails.cantidad_producto;
     },
-    computed:{
-        ...mapGetters([
-            'getDetails',
-            'getPath',
-            'getProducts',
-            'profile',
-            'getCount',
-            'getCarrito'
-        ]),
-        productos(){
-      return this.getDetails.productos.files
-      
-    },
-    },
-    name: 'Detalles',
-    components: {
-        Cartas
-    },
-    created:{
     
+    getProductosDetalles() {
+      let stock = 0;
+      //validar si el producto tiene stock
+      this.$store.dispatch('valida_stock',this.getDetails.productos.id_producto)
+      .then(res=>{
+        let data = res.data;
+       
+        if(res.data.cantidad_producto>0 && this.Productos.cantidad_producto<=res.data.cantidad_producto){
+                 //Valido con un for si el producto que voy a agregar ya se encuentra en el carrito
+      let productoRepetido = 0;
+      if (this.getCarrito.length == 0) {
+        this.Productos.id_producto = this.getDetails.productos.id_producto
+          this.setCantidadBorrada(this.Productos.cantidad_producto)
+        this.$store.dispatch('Resta_STock',this.Productos)
+        .then(res=>{
+          alert("success")
+        }).catch(err=>{
+          console.log(err)
+        })
+        this.setCarrito(this.getDetails);
+      } else {
+        for (let i = 0; i < this.getCarrito.length; i++) {
+          if (
+            this.getDetails.productos.id_producto ==
+            this.getCarrito[i].productos.id_producto
+          ) {
+            productoRepetido = 1;
+
+          } else {productoRepetido = 2;
+          }
+        } //
+      }
+  
+
+      if (productoRepetido == 1) {
+        sawl("Ya tiene ese producto seleciconado en el carrito", "", "error");
+      } else if(productoRepetido==2) {
+        //Todo lo que hara add to carrito
+        //1.peticion que descuenta en stock la cantidad del producto que desea comprar falso esto va en carrito
+        this.Productos.id_producto = this.getDetails.productos.id_producto
+        this.Productos.cantidad_producto = this.Productos.cantidad_producto
+        this.$store.dispatch('Resta_STock',this.Productos)
+        .then(res=>{
+          alert("success")
+        }).catch(err=>{
+          console.log(err)
+        })
+        //
+        this.setCarrito(this.getDetails);
+        productoRepetido = 0;
+      }
+        }else{alert('stock vacio o selecciono una cantidad que no existe')}
+      }).catch(err=>{
+        comsole.log(err)
+      })
+
+     
+    
+    },
+    onSlideStart(slide) {
+      this.sliding = true;
+    },
+    onSlideEnd(slide) {
+      this.sliding = false;
     }
-}
+  },
+  computed: {
+    ...mapGetters([
+      "getDetails",
+      "getPath",
+      "getProducts",
+      "profile",
+      "getCount",
+      "getCarrito"
+    ]),
+    productos() {
+      return this.getDetails.productos.files;
+    }
+  },
+  name: "Detalles",
+  components: {
+    Cartas
+  },
+  created: {}
+};
 </script>
 <style>
-.photos{
-    width:500px; 
-     height: 400px;
+.photos {
+  width: 500px;
+  height: 400px;
 }
 #form {
   width: 250px;
@@ -209,5 +289,4 @@ label:hover ~ label {
 input[type="radio"]:checked ~ label {
   color: orange;
 }
-
 </style>

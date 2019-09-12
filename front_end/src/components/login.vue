@@ -61,7 +61,8 @@ export default {
     ...mapMutations([
       'setFieldProfilename',
       'setProfileCedula',
-      'setValida'
+      'setValida',
+      'setUsername'
     ]),
     ...mapGetters([
       'getValida',
@@ -100,7 +101,8 @@ request(options, function (error, response, body) {
             if(this.valida.cedula == dat.cedula){
               
                sawl('Bienvenido a NEUROMARKET','','success')
-               this.setFieldProfilename(dat.nombre)
+              this.setFieldProfilename(dat.nombre)
+             
                this.setProfileCedula(dat.cedula)
                this.$router.push({path: '/'});
               

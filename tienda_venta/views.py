@@ -4,8 +4,11 @@ from rest_framework.response import Response
 
 from .serializer import LoginSerializer, JoinFalso2
 from .models import Cliente2, PseudoJoin
+from tienda_almacen.models import Producto
+from tienda_almacen.serializer import GuardaProducto
 from rest_framework.views import APIView
 from rest_framework.parsers import JSONParser
+from django.shortcuts import get_list_or_404, get_object_or_404
 
 '''
 @api_view(['GET'])
@@ -138,3 +141,38 @@ class GetTeles(APIView):
         else:
             serializer = JoinFalso2(snippets, many=True, context={'request': request})
             return Response(serializer.data)
+
+class GetStock(APIView):
+    
+    def get(self,request,id_producto):
+        stock = Producto.objects.get(pk=id_producto)
+        serializer = GuardaProducto(stock, context={'request':request})
+        return Response(serializer.data)
+
+'''Edita cantidad de ṕroductos'''
+class UpdateProductos(APIView):
+
+    def patch(self, request,pk,cantidad_producto):
+
+        model = get_object_or_404(Producto,pk=pk)
+        data = {'cantidad_producto':model.cantidad_producto-int(cantidad_producto)}
+
+        serializer = GuardaProducto(model, data=data, partial=True, context={'request': request})
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        else: 
+            return Response("error")
+
+
+class RestauraProductos(APIView):
+    def patch(self,request,pk,cantidad_producto):
+        model = get_object_or_404(Producto,pk=pk)
+        data = {'cantidad_producto':model.cantidad_producto+int(cantidad_producto)}
+
+        serializer = GuardaProducto(model, data=data, partial=True, context={'request':request})
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        else:
+            return Response("error")

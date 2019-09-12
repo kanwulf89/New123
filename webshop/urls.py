@@ -21,6 +21,7 @@ from django.conf import settings
 from tienda_venta import views
 from tienda_venta.models import Cliente2
 from tienda_venta import views
+
 '''from django.conf.urls import url, include'''
 
 urlpatterns = [
@@ -34,6 +35,9 @@ urlpatterns = [
     path('traeJuegos/', views.GetVideoJuegos.as_view()),
     path('traeCelulares/', views.GetPhone.as_view()),
     path('traeTeles/', views.GetTeles.as_view()),
+    path('stock/<int:id_producto>/', views.GetStock.as_view()),
+    path('edita/<int:pk>/<int:cantidad_producto>/', views.UpdateProductos.as_view()),
+    path('restaura/<int:pk>/<int:cantidad_producto>/',views.RestauraProductos.as_view()),
 
 
   
