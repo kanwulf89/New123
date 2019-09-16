@@ -181,7 +181,7 @@ export default {
     register2() {
       //Peticion que guarda datos de la entidad producto
       //validar que se ingrese al menos 1 foto, validar que no se manden promesas con vacios
-      if (this.Foto.file.length <= 3) {
+      if (this.Foto.file.length <= 5) {
         this.$store
           .dispatch("api_productos", this.dat)
           .then(res => {

@@ -14,6 +14,8 @@ import Busqueda from '@/components/Busqueda.vue'
 import Pruebahome from '@/components/Pruebahome.vue'
 import Carrito from '@/components/Carrito.vue'
 import Footer from '@/components/Footer.vue'
+import Ventas from '@/components/Ventas.vue'
+import Perfil from '@/components/Perfil.vue'
 
 
 
@@ -83,7 +85,13 @@ export default new Router({
   path: '/test',
   name: 'test',
   component: Pruebahome
-}
+},{
+  path: '/ventas',
+  name: 'ventas',
+  component: Ventas
+},
+
+
   ],
   mode: 'history'
 })

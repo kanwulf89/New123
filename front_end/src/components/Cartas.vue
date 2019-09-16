@@ -7,6 +7,7 @@
           <div class="container center-text">
   <b-alert show variant="primary"><strong>Ropa</strong></b-alert>
           </div>
+
     <b-card-group deck>
        <b-card   v-for="(i,index) in trae" v-bind:index="index"  v-if="index < 4" :key="i.id" text-variant="black" class="text-center mb-2"
       
@@ -18,8 +19,9 @@
     <form v-on:submit.prevent="Getid(i)">
       
         <b-card-title>{{i.productos.nombre_producto}}</b-card-title>
-        
+        <div>
         <b-card-img  thumbnail fluid v-bind:src="i.productos.files[0].file"  ></b-card-img>
+        </div>  
        <b-card-text>Compralo Ahora!</b-card-text>
         <button class="btn btn-success" >Detalles</button>
     </form>
@@ -55,7 +57,7 @@
     style="max-width: 25rem;">
     <form v-on:submit.prevent="Getid(j)">
         <b-card-title>{{j.productos.nombre_producto}}</b-card-title>
-        <b-card-img thumbnail fluid  v-bind:src="j.productos.files[0].file" fluid alt="Fluid image"></b-card-img>
+        <b-card-img thumbnail fluid  v-bind:src="j.productos.files[0].file"  alt="Fluid image"></b-card-img>
         <b-card-text>Compralo Ahora!</b-card-text>
         <button class="btn btn-success">Detalles</button>
     </form>

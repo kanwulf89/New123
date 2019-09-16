@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-success">
+<nav class="navbar navbar-expand-lg navbar-dark bg-info">
   <a class="navbar-brand" href="/">NEUROMARKET</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -20,8 +20,8 @@
          
        <b-form-select v-model="selected" :options="this.categorias"  @change="getProductos()"  class="nav-item"  >
                   <!-- This slot appears above the options from 'options' prop -->
-                  <template slot="first">
-                    <option :value="null" disabled>Categorias</option>
+                  <template slot="first" style="background-color:black;">
+                    <option :value="null" disabled style="background-color:black; "><strong>Categorias</strong></option>
                     
                   </template>
                 </b-form-select>   
@@ -101,13 +101,25 @@ components:{
    'setCategorias',
    'setInfo',
    'setCarritox',
+   'setFUllsaldo',
+   'BorraElementoCarrito',
+   'BorraCantidades'
   
    
 
 ]),deleteUser: function(){
     this.setFieldProfilename("");
+    this.setFUllsaldo(0);
     //Aca borrar producto, carrito de compras y detalles
-
+    for(let i=0; i<this.getCarrito.length; i++ ){
+       this.BorraElementoCarrito(i)// aca lo borra
+    }
+    for(let i=0; i<this.getCantidadSeleccionada.length;i++){
+      this.BorraCantidades(i)
+    }
+    alert(this.getCantidadSeleccionada.length)
+    
+   
     sawl('Usted cerro su sesion','','success')
     this.$router.push({path: '/'});
         },
@@ -159,7 +171,9 @@ computed:{
   'profile',
   'getInfo',
   'getCarrito',
-  'getDetails'
+  'getDetails',
+  
+  'getCantidadSeleccionada'
 
 
 

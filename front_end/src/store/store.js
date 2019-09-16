@@ -26,6 +26,9 @@ export const store = new Vuex.Store({
     tv:[],
     saldoTotal:0,
     cantidadBorrada:0,
+    saldoBorrado:0,
+    cantidades:[],
+    vistas:null,
    
   },
   getters: {
@@ -69,12 +72,31 @@ export const store = new Vuex.Store({
     },
     getCantidadBorrada: state =>{
       return state.cantidadBorrada;
+    },
+    getSaldoBorrado: state =>{
+      return state.saldoBorrado;
+    },
+    getCantidadSeleccionada: state=>{
+      return state.cantidades;
+    },
+    getVista: state =>{
+      return state.vistas
     }
+    
+    
+  
     
   }, 
   mutations: {
+    setVistas: (state,field) =>{
+      state.vistas = field;
+    }
+    ,
     setProfile: (state, pro) => {
       state.profile = pro;
+    },
+    setSaldoBorrado: (state, field)=>{
+      state.saldoBorrado = field
     },
     setInfo: (state,field) =>{
       state.info = field
@@ -122,10 +144,20 @@ export const store = new Vuex.Store({
       state.username = field;
     },
     setSaldo: (state,field) =>{
-      state.saldoTotal = state.saldoTotal + field
+      state.saldoTotal = parseFloat(state.saldoTotal) + parseFloat(field)
+    },setFUllsaldo:(state,field)=>{
+      state.saldoTotal = field;
     },
-    setCantidadBorrada: (state,field) =>{
+    setCantidadBorrada: (state,field) =>{//no hace falta esta variable global
       state.cantidadBorrada = field
+    },setSaldoresta: (state,field) =>{
+      state.saldoTotal = parseFloat(state.saldoTotal)-  parseFloat(field)
+    },
+    setCantidades: (state,field)=>{
+      state.cantidades.push(field)
+    },
+    BorraCantidades: (state,field) =>{
+      state.cantidades.splice(field,1)
     }
     
    
