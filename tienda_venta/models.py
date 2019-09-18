@@ -5,6 +5,8 @@ from tienda_almacen.models import Producto
 # Create your models here.
 
 
+
+
 class Pago(models.Model):
     nombre_tarjeta = models.CharField(max_length=20)
     numero_tarjeta = models.CharField(primary_key=True, max_length=40)
@@ -25,10 +27,7 @@ class Cliente2(models.Model):
         return self.nombre
    
         
-
-
-
-   
+ 
 
 class Pedido(models.Model):
     numero_pedido = models.AutoField(primary_key=True)
@@ -71,18 +70,29 @@ class Compra(models.Model):
     numero_compra = models.CharField(max_length=30)
     oferta = models.CharField(max_length = 30)
 
-
-
-
+class Factura2(models.Model):
+    numero_factura = models.AutoField(primary_key=True)
+    saldoTotal = models.DecimalField(null=True, blank=True, default=None, max_digits=19, decimal_places=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+    
    
 
 class Oferta(models.Model):
     booleano = models.BooleanField(default=False)
     ofertaz = models.CharField(max_length=20)
 
+'''Esta tabla es solo para compras'''
+class Join2(models.Model):
+    vendedor1 = models.ForeignKey(Cliente2, on_delete=models.CASCADE)
+    producto1 = models.ForeignKey(Producto, on_delete=models.CASCADE)
+    pedido1 = models.ForeignKey(Pedido, on_delete=models.CASCADE)
+    facturax = models.ForeignKey(Factura2, related_name="join2", on_delete=models.CASCADE, null = True)
 
+   
 
 class PseudoJoin(models.Model):
     vendedor = models.ForeignKey(Cliente2, on_delete=models.CASCADE)
     productos = models.ForeignKey(Producto, on_delete=models.CASCADE, null = True)
     pedidos = models.ForeignKey(Pedido, on_delete=models.CASCADE, null=True)
+
+

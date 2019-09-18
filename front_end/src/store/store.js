@@ -29,6 +29,11 @@ export const store = new Vuex.Store({
     saldoBorrado:0,
     cantidades:[],
     vistas:null,
+    idPedido:null,
+    idFactura:null,
+    Facturas:[],
+    ProductosComprados:[],
+    ProductosVendidos:[],
    
   },
   getters: {
@@ -81,6 +86,12 @@ export const store = new Vuex.Store({
     },
     getVista: state =>{
       return state.vistas
+    },
+    getPedido: state =>{
+      return state.idPedido;
+    },
+    getFactura:state=>{
+      return state.idFactura;
     }
     
     
@@ -128,24 +139,28 @@ export const store = new Vuex.Store({
     setValida: (state,field) => {
       state.valida = field
     },
-    setCarrito: (state, field) => {
+    setCarrito: (state, field) => {//agrega a carrito
       state.autos.push(field);
     },
-    BorraElementoCarrito: (state,field) =>{
+    BorraElementoCarrito: (state,field) =>{//borra elementos del carrito
       state.autos.splice(field,1)
     },
-    setPhone: (state,field)=>{
+    Borra:(state,field)=>{
+      state.autos = field;
+    },
+    setPhone: (state,field)=>{//guarda solo celulares
       state.phones = field;
     },
-    setTelevisores: (state,field) =>{
+    setTelevisores: (state,field) =>{//GUarda solo televisores
       state.tv = field;
     },
-    setUsername: (state,field)=>{
+    setUsername: (state,field)=>{//Guarda el usuario que se loguea
       state.username = field;
     },
     setSaldo: (state,field) =>{
       state.saldoTotal = parseFloat(state.saldoTotal) + parseFloat(field)
-    },setFUllsaldo:(state,field)=>{
+    }
+    ,setFUllsaldo:(state,field)=>{
       state.saldoTotal = field;
     },
     setCantidadBorrada: (state,field) =>{//no hace falta esta variable global
@@ -158,6 +173,12 @@ export const store = new Vuex.Store({
     },
     BorraCantidades: (state,field) =>{
       state.cantidades.splice(field,1)
+    },
+    setPedido: (state,field)=> {
+      state.idPedido = field
+    },
+    setFactura: (state,field)=>{
+      state.idFactura = field;
     }
     
    
@@ -306,6 +327,66 @@ export const store = new Vuex.Store({
     restauraCantidad:(context,credentials)=>{
       return new Promise((resolve)=>{
         axios.patch('http://localhost:8000/restaura/'+credentials.id_producto+'/'+credentials.cantidad_producto+'/')
+        .then(res=>{
+          resolve(res)
+        }).catch(err=>{
+          console.log(err)
+        })
+      })
+    },
+    pedidos:(context,credentials)=>{
+      return new Promise((resolve)=>{
+        axios.post('http://localhost:8000/api/v1.0/guardaPedido/',credentials)
+        .then(res=>{
+          resolve(res)
+        }).catch(err=>{
+          console.log(err)
+        })
+      })
+    },
+    creaFactura:(context,credentials)=>{
+        return new Promise((resolve)=>{
+            axios.post('http://localhost:8000/api/v1.0/Compras/',credentials)
+            .then(res=>{
+               resolve(res)
+            }).catch(err=>{
+                console.log(err);
+            })
+        })
+    },
+    guardaF:(context,credentials)=>{
+      return new Promise((resolve)=>{
+        axios.post('http://localhost:8000/api/v1.0/guardaF/',credentials)
+        .then(res=>{
+          resolve(res)
+        }).catch(err=>{
+          console.log(err)
+        })
+      })
+    },
+    BuscaProductos(context,credentials){
+      return new Promise((resolve)=>{        
+        axios.get('http://localhost:8000/buscaP/'+credentials.cedula+'/')
+        .then(res=>{
+          resolve(res)
+        }).catch(err=>{
+          console.log(err)
+        })
+      })
+    },
+    BuscaProductosOfertados(context,credentials){
+      return new Promise((resolve)=>{        
+        axios.get('http://localhost:8000/buscaPofertados/'+credentials.cedula+'/')
+        .then(res=>{
+          resolve(res)
+        }).catch(err=>{
+          console.log(err)
+        })
+      })
+    }
+    ,BuscaProductosVendidos(context,credentials){
+      return new Promise((resolve)=>{        
+        axios.get('http://localhost:8000/buscaPvendidos/'+credentials.cedula+'/')
         .then(res=>{
           resolve(res)
         }).catch(err=>{

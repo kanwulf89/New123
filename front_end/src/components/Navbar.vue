@@ -117,7 +117,8 @@ components:{
     for(let i=0; i<this.getCantidadSeleccionada.length;i++){
       this.BorraCantidades(i)
     }
-    alert(this.getCantidadSeleccionada.length)
+    alert("carrito"+this.getCarrito.length)
+
     
    
     sawl('Usted cerro su sesion','','success')

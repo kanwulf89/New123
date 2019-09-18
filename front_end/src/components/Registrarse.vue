@@ -23,6 +23,7 @@ const newLocal=this;
                 <div class="form-group">
                   <input type="text" v-model="user.email" class="form-control" placeholder="Email">
                 </div>
+                
               
                 <div class="form-group">
                   <input type="password" v-model="user.contra" class="form-control" placeholder="Password">
@@ -68,7 +69,7 @@ export default {
     ...mapGetters(["profile"])
   },
   methods: {
-    ...mapMutations(["setFieldProfilename", "setProfileCedula"]),
+    ...mapMutations(["setFieldProfilename", "setProfileCedula","setUsername"]),
     addUser: function() {
       this.setFieldProfilename(this.user.nombre);
     },
@@ -79,6 +80,8 @@ export default {
           .then(res => {
             this.setFieldProfilename(this.user.nombre);
             this.setProfileCedula(this.user.cedula);
+            alert(res.data.nombre + res.data.cedula)
+            this.setUsername(res.data)
             this.$router.push({ path: "/" });
             sawl("Registrado de forma correcta", "", "success");
           })

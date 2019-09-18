@@ -3,7 +3,7 @@ from .viewsets import ClienteViewSets
 from .viewsets import ClienteLogin
 from .viewsets import viewjoin
 from .viewsets import OfertaViewSets
-from .viewsets import VistaPrueba,VistaPrueba2,PruebaProducto
+from .viewsets import VistaPrueba,VistaPrueba2,PruebaProducto, PedidoVista, PedidoGuarda,Compra, VistaPrueba3,GuardaFactura
 from .models import Cliente2
 from .serializer import LoginSerializer
 from tienda_almacen.models import Producto 
@@ -20,6 +20,12 @@ router.register('test1',VistaPrueba)
 router.register('test2',VistaPrueba2, base_name=Producto)
 '''prueba'''
 router.register('test10',PruebaProducto)
+router.register('pedido',PedidoVista)
+router.register('guardaPedido',PedidoGuarda)
+router.register('Compras',Compra )
+router.register('test3',VistaPrueba3)
+
+router.register('guardaF',GuardaFactura)
 
 
 

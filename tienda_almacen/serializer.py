@@ -44,3 +44,4 @@ class ProductoSerializer(serializers.ModelSerializer):
             for file_data in files_data:
                 File.objects.create(Producto2=productos, **file_data)
             return productos
+

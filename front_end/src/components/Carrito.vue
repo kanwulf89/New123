@@ -35,21 +35,44 @@
           <b-col md="4">
             <!-- Columna Factura -->
 
-            <b-container fluid class="bv-example-row">
-              <h1>Factura</h1>
-              <b-row v-for="item in this.Productos" :key="item.id">
-                <b-col md="12">
-                  <b-card-text><strong>{{item.productos.nombre_producto}}</strong></b-card-text>
-                  <b-card-text>Vendedor: {{item.vendedor.nombre}}</b-card-text>
-                  <b-card-text>Precio: {{item.productos.precio_unidad}}</b-card-text>
-                  <b-card-text>Cantidad: {{cantidadProducto(item)}}</b-card-text>
-                </b-col>
-              </b-row>
-              <b-container></b-container>
-              <b-card-text>Saldo Total: {{getSaldo}}</b-card-text>
-              <template v-if="verificaSaldo">
-                <button class="btn btn-success">COMPRAR</button>
+            <b-container  class="bv-example-row">
+              <h1>Factura</h1><br>
+        <h1>Saldo Total: {{getSaldo}}</h1>
+     
+            <table class="col-sm-12" v-for="item in this.Productos" :key="item.id">
+ 
+ 
+        
+         
+          <tr>
+            <th>Producto:</th>
+            <th>{{item.productos.nombre_producto}}</th>
+          </tr>
+          <tr>
+            <th>vendedor:</th>
+            <th> {{item.vendedor.nombre}}</th>
+          </tr>
+          <tr>
+            <th>Cantidad:</th>
+            <th>{{cantidadProducto(item)}}</th>
+          </tr>
+          <tr>
+            <th>Precio Unidad</th>
+            <th>{{item.productos.precio_unidad}}</th><br><br>
+          </tr>
+        
+                  <h1 class="center-text"></h1>
+
+</table><br><br>
+   
+   <template v-if="verificaSaldo">
+                <button class="btn btn-success" @click="pedidos()">COMPRAR</button>
               </template>
+
+
+
+
+           
             </b-container>
 
             <!-- Finaliza Columna factura -->
@@ -63,25 +86,99 @@
 import { mapGetters, mapMutations } from "vuex";
 import JQuery from "jquery";
 let $ = JQuery;
+(function(){
+                emailjs.init("user_IkN7wLCeMfPH1kD7Zfy5e");
+             })()
 
 export default {
+  
   data() {
     return {
       Productoscantidad: {
         id_producto: 0,
         cantidad_producto: 0
       },
-      Productos: []
+      Productos: [],
+      cliente:null,
+      modificaPsudoJoin:{
+        vendedor1:null,
+        producto1:null,
+        pedido1:null,
+        facturax:null,
+      },
+      saldoT:null,
+      from_name: '',
+                        from_email: '',
+                        message: '',
+                        subject: '',
+                        from_email2:''
     };
-  },
+  }, 
   methods: {
     ...mapMutations([
       "setDetalle",
       "setCount",
       "BorraElementoCarrito",
       "setCantidadBorrada",
-      "setSaldoresta"
-    ]),
+      "setSaldoresta",
+      "setPedido",
+      "setUsername",
+      "setFactura",
+      "setSaldo",
+      "setFUllsaldo",
+      "Borra"
+
+    ]),  addZero(i) {
+    if (i < 10) {
+        i = '0' + i;
+    }
+    return i;
+},hoyFecha(){
+      function addZero(i) {
+    if (i < 10) {
+        i = '0' + i;
+    }
+    return i;
+}
+        var hoy = new Date();
+        var dd = hoy.getDate();
+        var mm = hoy.getMonth()+1;
+        var yyyy = hoy.getFullYear();
+        
+        dd = addZero(dd);
+        mm = addZero(mm);
+ 
+        return dd+'/'+mm+'/'+yyyy;
+}  ,enviar(){
+          let productos = "";
+          let vende = ""
+          this.getCarrito.forEach(element=>{
+            productos = productos + "Producto:"+element.productos.nombre_producto+"-"+"Vendedor:"+element.vendedor.nombre+'-'+"Precio:"+element.productos.precio_unidad+"\n"
+           
+
+          })
+                        let data = {
+                            from_name:productos,
+                            from_email: "mundo",
+                            message: productos,
+                            saldo: this.getSaldo,
+                            subject: "Tienda Neuromaker Factura",
+                            from_email2 :this.getUsername.email,
+                            vendedores : vende,
+                            fecha:this.hoyFecha()
+                        };
+                        
+                        emailjs.send("default_service","test1", data)
+                        .then(function(response) {
+                            if(response.text === 'OK'){
+                                alert('El correo se ha enviado de forma exitosa');
+                            }
+                           console.log("SUCCESS. status=%d, text=%s", response.status, response.text);
+                        }, function(err) {
+                            alert('Ocurrió un problema al enviar el correo');
+                           console.log("FAILED. error=", err);
+                        });
+                    },
     restauraCantidad(i) {
       //Si la persona elimina el elemento del carrito se restaura el valor de la cantidad
       this.Productoscantidad.id_producto = i;
@@ -106,12 +203,7 @@ export default {
     saluda(j) {
       let test = 0;
       let cantidades_borradas_de_cada_producto = 0;
-      alert(
-        "cantidades" +
-          this.getCantidadSeleccionada.length +
-          "carrito" +
-          this.Productos.length
-      );
+    
 
       for (let i = 0; i < this.Productos.length; i++) {
         alert(
@@ -162,6 +254,84 @@ export default {
         }
       }
       return this.getCantidadSeleccionada[posicionArreglo].cantidad_borrada;//imprimo la cantidad
+    },
+      pedidos(){
+        
+         let data = new FormData();
+         data.append('cliente',this.getUsername.cedula)          
+      this.$store.dispatch('pedidos',data)
+      .then(res=>{
+        
+        let pkPedido = res.data.numero_pedido
+        
+        this.setPedido(pkPedido);
+        alert("PEDIDOS"+this.getPedido)
+       this.GuardaFactura()
+       this.enviar()
+       this.BotonComprar()
+        
+     
+      }).catch(err=>{
+        console.log(err)
+      })
+    },
+   
+    GuardaFactura(){
+      alert(this.getSaldo)
+      let data = new FormData();
+      data.append('saldoTotal',this.getSaldo)//pasa el saldo total de vuex del carrito
+      
+      this.$store.dispatch('guardaF',data).then(res=>{//guardo en vuex la id de la factura creada
+        this.setFactura(res.data.numero_factura)
+       
+        
+      }).catch(err=>{
+        console.log(err)
+      })
+    },
+
+    BotonComprar(){//1. debo crer un registro en la tabla pedidos con el id del cliente que compra
+//la id la obtengo del cliente cuando se loguea en la aplicacion
+//2. al insertar en la base de datos, el response del backend DJANGO me devuelve el id auto incrementable que es pk
+//3. esta pk representa el registro d ela tabla pedido que acabe de llenar
+//4. EN el carrito tengo los productos que el cliente desea comprar
+//4.1 
+//5. Hacer un ciclo que sea del tamaño del carrito y por cada ciclo, guarde
+//id del vendedor, id del producto, id del pedido, el atributo que varia en este caso solo sera el
+//id del producto, en la tabla PsudoJoin
+//6. la tabla oferta tendra cada producto, quien lo vende y el pedido 
+//7. a partir de aca es trabajo del backend en django
+   
+    
+  //ciclo que hace peticiones para llenar tabla de psudojoins
+     //a partir de aca es trabajo del backend es decir en django
+     this.getCarrito.forEach(element => {
+        let data = new FormData();
+     data.append('vendedor1',element.vendedor.cedula )
+     data.append('producto1',element.productos.id_producto)
+     data.append('pedido1',this.getPedido)
+     data.append('facturax',this.getFactura)
+  
+
+    this.$store.dispatch('creaFactura',data).then(res=>{
+       alert("funcionmoooo")
+       
+      }).catch(err=>{
+      console.log(err)
+      })
+     });
+    
+   
+
+    //Aca borrar producto, carrito de compras y detalles
+    this.Borra([])
+    this.Productos = []
+   
+     
+         this.setFUllsaldo(0)
+
+    
+     
     }
   },
 
@@ -169,6 +339,8 @@ export default {
     for (let i = 0; i < this.getCarrito.length; i++) {
       this.Productos.push(this.getCarrito[i]);
     }
+    alert(this.getCarrito.length)
+      console.log(this.getCarrito.length)
   },
   computed: {
     ...mapGetters([
@@ -178,7 +350,10 @@ export default {
       "getCarrito",
       "getCantidadBorrada",
       "getSaldo",
-      "getCantidadSeleccionada"
+      "getCantidadSeleccionada",
+       "getUsername",
+       "getPedido",
+       "getFactura",
     ]),
     trae() {
       return this.getInfo;
@@ -195,7 +370,8 @@ export default {
       } else {
         return false;
       }
-    }
+    },
+   
   }
 };
 </script>

@@ -13,7 +13,8 @@
 
           <!-- Elements to collapse -->
           <b-collapse id="collapse-a" class="mt-2">
-            <b-card>Bienvenido</b-card>
+            <b-card>Bienvenido<br>{{getUsername.email}}</b-card>
+           
           </b-collapse>
           <b-collapse id="collapse-b" class="mt-2">
             <b-card>
@@ -55,6 +56,16 @@
               >Articulos</button>
             </b-card>
           </b-collapse>
+          <b-collapse id="collapse-e" class="mt-2">
+            <b-card>
+              <button
+                lass="mt-2"
+                class="btn btn-info"
+                style="width:150px"
+                @click="llamaVistaDatos()"
+              >Mis datos</button>
+            </b-card>
+          </b-collapse>
         </div>
         <!-- collapse -->
       </b-col>
@@ -70,6 +81,9 @@
       <b-col sm="8" v-if="comparavistas4">
         <Articulos></Articulos>
       </b-col>
+      <b-col sm="8" v-if="comparavistas5">
+        <Datos></Datos>
+      </b-col>
     </b-row>
   </b-container>
 </template>
@@ -80,6 +94,7 @@ import Ventas from "@/components/Ventas.vue";
 import Facturas from "@/components/Facturas.vue";
 import Articulos from "@/components/Articulos.vue";
 import Compras from "@/components/Compras.vue";
+import Datos from '@/components/Datos.vue';
 
 import { mapGetters, mapMutations } from "vuex";
 export default {
@@ -96,10 +111,13 @@ export default {
     },
     llamaVistaArticulos() {
       this.setVistas("Articulos");
+    },
+    llamaVistaDatos(){
+      this.setVistas("Datos")
     }
   },
   computed: {
-    ...mapGetters(["getVista"]),
+    ...mapGetters(["getVista","getUsername"]),
     comparavavistas2() {
       if (this.getVista == "Facturas") {
         return true;
@@ -120,6 +138,11 @@ export default {
       if (this.getVista == "Articulos") {
         return true;
       }
+    },
+    comparavistas5(){
+      if(this.getVista == "Datos"){
+        return true
+      }
     }
   },
   components: {
@@ -127,7 +150,8 @@ export default {
     Ventas,
     Facturas,
     Articulos,
-    Compras
+    Compras,
+    Datos,
   }
 };
 </script>

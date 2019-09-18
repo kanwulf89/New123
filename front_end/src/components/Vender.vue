@@ -233,6 +233,7 @@ export default {
             //las imagenes para mostrar cuando las voy a cargar al servidor
             this.images.splice(i, 1);
             this.url.splice(i, 1);
+            this.file = "";
           }
         });
       }

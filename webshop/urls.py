@@ -38,6 +38,12 @@ urlpatterns = [
     path('stock/<int:id_producto>/', views.GetStock.as_view()),
     path('edita/<int:pk>/<int:cantidad_producto>/', views.UpdateProductos.as_view()),
     path('restaura/<int:pk>/<int:cantidad_producto>/',views.RestauraProductos.as_view()),
+    path('editaTABLA/<int:productos_id>/<int:pedidos>/', views.AlteraPseudoJoi.as_view()),
+    path('buscaP/<cedula>/',views.MandaProductosComprados.as_view()),
+    path('buscaPofertados/<cedula>/',views.MandaProductosenVenta.as_view()),
+    path('buscaPvendidos/<cedula>/',views.MandaProductosenVendidos.as_view())
+
+
 
 
   

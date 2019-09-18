@@ -57,12 +57,23 @@ export default {
     }
   },
   methods: {
+
      
     ...mapMutations([
       'setFieldProfilename',
       'setProfileCedula',
       'setValida',
-      'setUsername'
+      'setUsername',
+      "setCarrito",
+      "setCount",
+      "BorraElementoCarrito",
+      "setCantidadBorrada",
+      "setSaldoresta",
+      "setPedido",
+      "setUsername",
+      "setFactura",
+      "setSaldo",
+      "setFUllsaldo"
     ]),
     ...mapGetters([
       'getValida',
@@ -97,8 +108,8 @@ request(options, function (error, response, body) {
       this.$store.dispatch('api_login', this.valida)
         .then(res => {
           let dat = res.data[0]
-           
-            if(this.valida.cedula == dat.cedula){
+           this.setUsername(dat)//Guarda usuario en varianle username
+            if(this.valida.cedula == dat.cedula){//valida si la cedula que retorna es la misma
               
                sawl('Bienvenido a NEUROMARKET','','success')
               this.setFieldProfilename(dat.nombre)
@@ -122,7 +133,18 @@ request(options, function (error, response, body) {
     }
   
  
-}}
+}
+,created(){
+  this.setFUllsaldo(0);
+    //Aca borrar producto, carrito de compras y detalles
+    for(let i=0; i<this.getCarrito.length; i++ ){
+       this.BorraElementoCarrito(i)// aca lo borra
+    }
+    for(let i=0; i<this.getCantidadSeleccionada.length;i++){
+      this.BorraCantidades(i)
+    }
+}
+}
 </script>
 
 <style lang="css">

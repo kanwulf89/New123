@@ -2,8 +2,8 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from .serializer import LoginSerializer, JoinFalso2
-from .models import Cliente2, PseudoJoin
+from .serializer import LoginSerializer, JoinFalso2, JoinFalso,JoinFalso3
+from .models import Cliente2, PseudoJoin, Join2
 from tienda_almacen.models import Producto
 from tienda_almacen.serializer import GuardaProducto
 from rest_framework.views import APIView
@@ -142,6 +142,45 @@ class GetTeles(APIView):
             serializer = JoinFalso2(snippets, many=True, context={'request': request})
             return Response(serializer.data)
 
+class MandaProductosComprados(APIView):
+
+    def get(self,request,cedula):
+
+        snippets = Join2.objects.filter(pedido1__cliente__cedula=cedula)
+
+        if not snippets:
+            return Response("No")
+        else:
+            serializer = JoinFalso3(snippets, many=True, context={'request':request})
+            return Response(serializer.data)
+
+'''Retorna productos que estan en venta de determinado cliente'''
+class MandaProductosenVenta(APIView):
+
+    def get(self,request,cedula):
+
+        snippets = PseudoJoin.objects.filter(vendedor__cedula=cedula)
+
+        if not snippets:
+            return Response("no")
+        else:
+            serializer = JoinFalso2(snippets, many=True, context={'request':request})
+            return Response(serializer.data)
+
+class MandaProductosenVendidos(APIView):
+
+    def get(self,request,cedula):
+
+        snippets = Join2.objects.filter(vendedor1__cedula=cedula)
+
+        if not snippets:
+            return Response("no")
+        else:
+            serializer = JoinFalso3(snippets, many=True, context={'request':request})
+            return Response(serializer.data)
+
+
+
 class GetStock(APIView):
     
     def get(self,request,id_producto):
@@ -176,3 +215,20 @@ class RestauraProductos(APIView):
             return Response(serializer.data)
         else:
             return Response("error")
+
+class AlteraPseudoJoi(APIView):
+    def patch(self,request,productos_id,pedidos):
+        model = get_object_or_404(PseudoJoin, productos_id=productos_id)
+        data = {'pedidos':model.pedidos}
+
+        serializer = JoinFalso(model, data=data, partial= True, context={'request':request})
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        else:
+            return Response("error")
+
+
+
+
+

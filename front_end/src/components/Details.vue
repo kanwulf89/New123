@@ -178,7 +178,7 @@ export default {
       .then(res=>{
         let data = res.data;
        
-        if(res.data.cantidad_producto>0 && this.Productos.cantidad_producto<=res.data.cantidad_producto){
+        if(res.data.cantidad_producto>0 && this.Productos.cantidad_producto<=res.data.cantidad_producto && this.Productos.cantidad_producto>0){
                  //Valido con un for si el producto que voy a agregar ya se encuentra en el carrito
       let productoRepetido = 0;
       if (this.getCarrito.length == 0) {//aca entra si el carrito tiene tamaño 0

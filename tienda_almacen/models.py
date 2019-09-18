@@ -15,7 +15,7 @@ class Producto(models.Model):
     nombre_producto = models.CharField(max_length=100)
     cantidad_producto = models.IntegerField()
     precio_unidad = models.DecimalField(null=True, blank=True, default=None, max_digits=19, decimal_places=0)
-    descripcion = models.CharField(max_length=200, default="")
+    descripcion = models.CharField(max_length=800, default="")
     categoria_id = models.ForeignKey(Categoria, blank=True,on_delete=models.CASCADE)
 
 
