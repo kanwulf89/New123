@@ -21,9 +21,15 @@
                             <b-card-text>{{i.productos.descripcion}}</b-card-text>
                             <b-card-text>Precio Unidad:{{i.productos.precio_unidad}}</b-card-text>
                              <b-card-text>Cantidad Producto:{{i.productos.cantidad_producto}}</b-card-text>
-                           
+                            <template v-if="stockVacio(i)">
+                             <input v-model="manda.cantidad_producto" placeholder="%" >
+                             <button class="btn btn-success" @click="CalculaPorcentaje(i)">Descuento</button>
+                            </template>
+                            <template v-else>
+                              <p style="color:red;">Stock vacio</p>
+                            </template>
                           </form>
-                          <br />
+                          <br/>
                         </b-card-text>
                       </b-col>
                     </b-row>
@@ -50,15 +56,18 @@ import {mapGetters} from 'vuex';
        Productos:[],
        valida: {
         cedula: null,
-        
-
       },
+       manda:{
+         id_producto:null,
+         cantidad_producto:null,
+       }
       }
     },
     computed:{
         ...mapGetters([
             'getUsername'
-        ])
+        ]),
+       
     },
     created(){
         this.cargaProductosComprados()
@@ -66,6 +75,7 @@ import {mapGetters} from 'vuex';
     methods:{
       cargaProductosComprados(){
           this.valida.cedula = this.getUsername.cedula
+
           let data = new FormData();
           data.append('cedula',this.valida.cedula)
         this.$store.dispatch('BuscaProductosOfertados',this.valida)
@@ -77,7 +87,21 @@ import {mapGetters} from 'vuex';
         })
 
 
-      }
+      },  CalculaPorcentaje(i){alert(i.productos.cantidad_producto)
+        this.manda.id_producto = i.productos.id_producto
+        this.$store.dispatch('EnviaDescuento',this.manda)
+        .then(res=>{
+        alert("funciono")
+        }).catch(err=>{
+          console.log(err)
+        })
+      },
+      stockVacio(i){
+        if(i.productos.cantidad_producto == 0){
+          return false
+        }else{return true}
+      },
+     
     }
   }
 </script>

@@ -41,7 +41,8 @@ export const store = new Vuex.Store({
       return state.profile;
     },
     getInfo: state =>{
-      return state.info
+      return state.info;
+
     },getUsername: state=>{
       return state.username;
     },
@@ -387,6 +388,16 @@ export const store = new Vuex.Store({
     ,BuscaProductosVendidos(context,credentials){
       return new Promise((resolve)=>{        
         axios.get('http://localhost:8000/buscaPvendidos/'+credentials.cedula+'/')
+        .then(res=>{
+          resolve(res)
+        }).catch(err=>{
+          console.log(err)
+        })
+      })
+    },
+    EnviaDescuento(context,credentials){
+      return new Promise((resolve)=>{
+        axios.patch('http://localhost:8000/descuento/56/4500005/')
         .then(res=>{
           resolve(res)
         }).catch(err=>{

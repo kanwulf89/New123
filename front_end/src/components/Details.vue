@@ -83,8 +83,10 @@
               </b-col>
             </b-row>
             <b-row>
-              <b-col lg="12" class="pb-2">
+              <b-col lg="12" class="pb-2" >
+                <template v-if="ExisteUsuario()">
                 <b-button block variant="success" @click=" getProductosDetalles">Add a Carrito<i class="fas fa-cart-plus"></i></b-button>
+                </template>
               </b-col>
             </b-row>
             <b-row>
@@ -165,7 +167,13 @@ export default {
     },
     creaSaldoFactura(precio){
       this.setSaldo(precio)
+    },
+    ExisteUsuario(){
+      if(this.getUsername != ""){
+        return true
+      }else{return false}
     }
+    
     ,retornaCantidad() {
       alert(this.getDetails.cantidad_producto)
       return this.getDetails.cantidad_producto;
@@ -264,7 +272,8 @@ export default {
       "profile",
       "getCount",
       "getCarrito",
-      "getCantidadSeleccionada"
+      "getCantidadSeleccionada",
+      'getUsername'
     ]),
     productos() {
       return this.getDetails.productos.files;

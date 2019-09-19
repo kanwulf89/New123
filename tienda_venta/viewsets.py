@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Cliente2,PseudoJoin, Pedido, Join2, Factura2
 from tienda_almacen.models import Producto 
-from tienda_almacen.serializer import ProductoSerializer, FileSerializer
+from tienda_almacen.serializer import ProductoSerializer, FileSerializer,GuardaProducto
 from .models import Oferta
 from rest_framework import generics
 from rest_framework.views import APIView
@@ -30,6 +30,7 @@ class Compra(viewsets.ModelViewSet):
     queryset = Join2.objects.all()
     serializer_class = OfertaSerializer2
    
+
 
     
 '''prueba'''

@@ -14,7 +14,7 @@
                   <input v-model="valida.cedula" type="text" class="form-control" id="" placeholder="cedula">
                 </div>
                 <div class="form-group">
-                  <input v-model="valida.contra" type="text" name="pass" value="" class="form-control" placeholder="Password">
+                  <input v-model="valida.contra" type="password" name="pass" value="" class="form-control" placeholder="Password">
                 </div>
                 <div class="form-group">
                   <button class="btn btn-success btn-block">Entrar</button>
@@ -24,10 +24,8 @@
               <form>
                 <div class="form-group">
                    <div class="form-group">
-                  <button class="btn btn-primary btn-block">Facebook</button>
                 </div>
                 <div class="form-group">
-                  <button class="btn btn-danger btn-block">Google</button>
                 </div>
                   </div>
                 </form>

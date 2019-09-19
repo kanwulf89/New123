@@ -41,7 +41,8 @@ urlpatterns = [
     path('editaTABLA/<int:productos_id>/<int:pedidos>/', views.AlteraPseudoJoi.as_view()),
     path('buscaP/<cedula>/',views.MandaProductosComprados.as_view()),
     path('buscaPofertados/<cedula>/',views.MandaProductosenVenta.as_view()),
-    path('buscaPvendidos/<cedula>/',views.MandaProductosenVendidos.as_view())
+    path('buscaPvendidos/<cedula>/',views.MandaProductosenVendidos.as_view()),
+    path('descuento/<id_producto>/<precio_unidad>/', views.Descuentos.as_view()),
 
 
 

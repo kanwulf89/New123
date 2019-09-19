@@ -18,12 +18,13 @@
           </b-collapse>
           <b-collapse id="collapse-b" class="mt-2">
             <b-card>
+              <!--
               <button
                 lass="mt-2"
                 class="btn btn-info"
                 @click="llamaVistaFactura()"
                 style="width:150px"
-              >Facturas</button>
+              >Facturas</button>-->
             </b-card>
           </b-collapse>
           <b-collapse id="collapse-c" class="mt-2">

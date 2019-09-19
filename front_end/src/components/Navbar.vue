@@ -103,13 +103,15 @@ components:{
    'setCarritox',
    'setFUllsaldo',
    'BorraElementoCarrito',
-   'BorraCantidades'
+   'BorraCantidades',
+   'setUsername'
   
    
 
 ]),deleteUser: function(){
     this.setFieldProfilename("");
     this.setFUllsaldo(0);
+    this.setUsername("")
     //Aca borrar producto, carrito de compras y detalles
     for(let i=0; i<this.getCarrito.length; i++ ){
        this.BorraElementoCarrito(i)// aca lo borra

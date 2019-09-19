@@ -8,7 +8,7 @@
           <b-card-group deck>
             <b-container class="bv-example-row">
               <b-row>
-                <b-col>Espacio para algo</b-col>
+                <b-col></b-col>
                 <b-col md="10" v-for="(i,index) in trae" v-bind:index="index" :key="i.id">
                   <b-card
                     v-bind:img-src="i.productos.files[0].file"

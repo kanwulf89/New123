@@ -230,5 +230,14 @@ class AlteraPseudoJoi(APIView):
 
 
 
+class Descuentos(APIView):
+    def patch(self,request,id_producto,precio_unidad):
+        model = get_object_or_404(Producto,id_producto=id_producto)
+        data = {'precio_unidad':model.precio_unidad-(int(precio_unidad))}
 
-
+        serializer = GuardaProducto(model, data=data, partial=True, context={'request':request})
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        else:
+            return Response("error")
