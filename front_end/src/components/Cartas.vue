@@ -22,6 +22,8 @@
         <div>
         <b-card-img  thumbnail fluid v-bind:src="i.productos.files[0].file"  ></b-card-img>
         </div>  
+                <b-card-text>${{i.productos.precio_unidad}}</b-card-text>
+
        <b-card-text>Compralo Ahora!</b-card-text>
         <button class="btn btn-success" >Detalles</button>
     </form>
@@ -41,6 +43,7 @@
     <form v-on:submit.prevent="Getid(j)">
         <b-card-title>{{j.productos.nombre_producto}}</b-card-title>
         <b-card-img thumbnail fluid  v-bind:src="j.productos.files[0].file" fluid alt="Fluid image"></b-card-img>
+        <b-card-text>${{j.productos.precio_unidad}}</b-card-text>
         <b-card-text>Compralo Ahora!</b-card-text>
         <button class="btn btn-success">Detalles</button>
     </form>
@@ -58,6 +61,8 @@
     <form v-on:submit.prevent="Getid(j)">
         <b-card-title>{{j.productos.nombre_producto}}</b-card-title>
         <b-card-img thumbnail fluid  v-bind:src="j.productos.files[0].file"  alt="Fluid image"></b-card-img>
+                <b-card-text>${{j.productos.precio_unidad}}</b-card-text>
+
         <b-card-text>Compralo Ahora!</b-card-text>
         <button class="btn btn-success">Detalles</button>
     </form>
@@ -74,7 +79,10 @@
     style="max-width: 25rem;">
     <form v-on:submit.prevent="Getid(j)">
         <b-card-title>{{j.productos.nombre_producto}}</b-card-title>
+
         <b-card-img thumbnail fluid  v-bind:src="j.productos.files[0].file" fluid alt="Fluid image"></b-card-img>
+                        <b-card-text>${{j.productos.precio_unidad}}</b-card-text>
+
         <b-card-text>Compralo Ahora!</b-card-text>
         <button class="btn btn-success">Detalles</button>
     </form>

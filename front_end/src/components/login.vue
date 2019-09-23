@@ -102,18 +102,20 @@ request(options, function (error, response, body) {
 });*/
 
 
-      
+      if(this.valida.cedula != null && this.valida.contra != null){
       this.$store.dispatch('api_login', this.valida)
         .then(res => {
           let dat = res.data[0]
+          alert(dat)
            this.setUsername(dat)//Guarda usuario en varianle username
-            if(this.valida.cedula == dat.cedula){//valida si la cedula que retorna es la misma
+            if(this.valida.cedula == dat.cedula && dat!=null && dat !=""){//valida si la cedula que retorna es la misma
               
                sawl('Bienvenido a NEUROMARKET','','success')
               this.setFieldProfilename(dat.nombre)
              
                this.setProfileCedula(dat.cedula)
                this.$router.push({path: '/'});
+              
               
 
             }else{
@@ -128,6 +130,8 @@ request(options, function (error, response, body) {
        
 
         });
+    }else{sawl('ERROR campos vacios','','error')
+}
     }
   
  

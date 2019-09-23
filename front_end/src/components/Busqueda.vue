@@ -9,7 +9,7 @@
             <b-container class="bv-example-row">
               <b-row>
                 <b-col></b-col>
-                <b-col md="10" v-for="(i,index) in trae" v-bind:index="index" :key="i.id">
+                <b-col md="12" v-for="(i,index) in trae" v-bind:index="index" :key="i.id">
                   <b-card
                     v-bind:img-src="i.productos.files[0].file"
                     img-alt="Card image"
@@ -23,7 +23,6 @@
                         <b-card-text>Cantidad Actual: {{i.productos.cantidad_producto}}</b-card-text>
                         <b-card-text>Compralo Ahora!</b-card-text>
                         <button class="btn btn-success">Detalles</button>
-                        <button class="btn btn-danger">Comprar</button>
                       </form>
                     </b-card-text>
                   </b-card>

@@ -34,6 +34,7 @@ export const store = new Vuex.Store({
     Facturas:[],
     ProductosComprados:[],
     ProductosVendidos:[],
+    contador:null, //cuenta el numero de productos ingresado en carrito
    
   },
   getters: {
@@ -93,6 +94,9 @@ export const store = new Vuex.Store({
     },
     getFactura:state=>{
       return state.idFactura;
+    },
+    getContador:state=>{
+      return state.contador;
     }
     
     
@@ -180,6 +184,12 @@ export const store = new Vuex.Store({
     },
     setFactura: (state,field)=>{
       state.idFactura = field;
+    },
+    setContador: (state,field) =>{
+      state.contador = field;
+    },
+    BorraCompletoCantidades: (state,field)=>{
+      state.cantidades = field;
     }
     
    
@@ -315,7 +325,7 @@ export const store = new Vuex.Store({
       })
     },
 
-    Resta_STock:(context,credentials) =>{
+    Resta_STock:(context,credentials) =>{//resta cantidades
       return new Promise((resolve)=>{
         axios.patch('http://localhost:8000/edita/'+credentials.id_producto+'/'+credentials.cantidad_producto+'/')
         .then(res=>{
@@ -325,7 +335,7 @@ export const store = new Vuex.Store({
         })
       })
     },
-    restauraCantidad:(context,credentials)=>{
+    restauraCantidad:(context,credentials)=>{//suma cantidades
       return new Promise((resolve)=>{
         axios.patch('http://localhost:8000/restaura/'+credentials.id_producto+'/'+credentials.cantidad_producto+'/')
         .then(res=>{

@@ -2,12 +2,11 @@
   <div class="home">
     <b-carousel
       id="carousel-1"
-      v-model="slide"
+      
       :interval="4000"
       controls
       indicators
-      @sliding-start="onSlideStart"
-      @sliding-end="onSlideEnd"
+    
     >
       <b-carousel-slide>
         <b-card slot="img" alt="image slot" img-blank img-alt="Card image">
@@ -38,11 +37,11 @@ import { mapGetters, mapMutations } from "vuex";
 
 export default {
   name: "home",
-  name: "foo",
+ 
   components: {
     Cartas,
     Navbar,
-    Footer
+  
   },
   computed: {
     ...mapGetters(["getProducts", "profile"]),

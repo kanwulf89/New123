@@ -19,8 +19,7 @@
               img-width="1024"
               img-height="480"
               style="text-shadow: 1px 1px 2px #333;"
-              @sliding-start="onSlideStart"
-              @sliding-end="onSlideEnd"
+            
             >
               <!-- Text slides with image -->
               <b-carousel-slide v-for="item in productos" :key="item.id">
@@ -155,13 +154,14 @@ export default {
       },
       cantidadActual:0,
       cantidadBorrada_idproducto:{
-        id_delPoroducto:null,
-        cantidad_borrada:null,
-      }
+        id_producto:null,
+        cantidad_producto:null,
+      },
+      count: 0
     };
   },
   methods: {
-    ...mapMutations(["setCarrito", "setCarritox","setCantidadBorrada","setSaldo","setCantidades"]),
+    ...mapMutations(["setCarrito", "setCarritox","setCantidadBorrada","setSaldo","setCantidades","setContador"]),
     getProfiele() {
       this.profile.frist;
     },
@@ -185,52 +185,58 @@ export default {
       this.$store.dispatch('valida_stock',this.getDetails.productos.id_producto)
       .then(res=>{
         let data = res.data;
-       
+//valido si la cantidad traida de la base de datos es >0, si la cantidad ingresada es >0 y 
+//si la cantidad ingresada es <= a la cantidad traida de la base de datos
+
         if(res.data.cantidad_producto>0 && this.Productos.cantidad_producto<=res.data.cantidad_producto && this.Productos.cantidad_producto>0){
-                 //Valido con un for si el producto que voy a agregar ya se encuentra en el carrito
       let productoRepetido = 0;
       if (this.getCarrito.length == 0) {//aca entra si el carrito tiene tamaño 0
-        this.Productos.id_producto = this.getDetails.productos.id_producto
-          this.setCantidadBorrada(this.Productos.cantidad_producto)
-           this.setSaldo(this.getDetails.productos.precio_unidad*this.Productos.cantidad_producto)
-         this.cantidadBorrada_idproducto.id_delPoroducto = this.getDetails.productos.id_producto;
-        this.cantidadBorrada_idproducto.cantidad_borrada = this.Productos.cantidad_producto;
-        alert(this.cantidadBorrada_idproducto.id_delPoroducto +  this.cantidadBorrada_idproducto.cantidad_borrada)
-        this.setCantidades(this.cantidadBorrada_idproducto)
-        alert(this.getCantidadSeleccionada.length)
-        this.$store.dispatch('Resta_STock',this.Productos)//COnsulta
+        this.Productos.id_producto = this.getDetails.productos.id_producto //atrapa la id del producto seleccionado en
+        //una variable creada en vue en data return de tipo json para manadarla por axios
+          this.setCantidadBorrada(this.Productos.cantidad_producto)//guarda en variable de vuex la cantidad borrada
+           this.setSaldo(this.getDetails.productos.precio_unidad*this.Productos.cantidad_producto)//guarda en vuex
+           //el valor del producto traido de la base de datos de la peticion de arriba
+         this.cantidadBorrada_idproducto.id_producto = this.getDetails.productos.id_producto;//guarda en la variable tipo 
+         //object json la id del producto que va a alamcenar en el carrito para usarla despues
+        this.cantidadBorrada_idproducto.cantidad_producto = this.Productos.cantidad_producto;//guarda la cantidad que selecciono
+        //del producto que se desea comprar para usarla despues
+        this.setCantidades(this.cantidadBorrada_idproducto)//guarda en vuex un arreglo de objetos con id del producto
+        // y la cantidad que desea comprar de ese producto
+
+        this.$store.dispatch('Resta_STock',this.Productos)//Consulta para descontar cantidad seleccionada del producto que
+        //agrego al carrito de compras
         .then(res=>{
-          alert("success")
+          alert("success")//respuesta de la peticion
         }).catch(err=>{
           console.log(err)
         })//final consulta
-       
-        
-        this.setCarrito(this.getDetails);
-      } else {
+      this.setCarrito(this.getDetails);//En esta condicion cumplida se agrega el producto al carrito
+       this.popToast()
+
+      } else {//Valido con un for si el producto que voy a agregar ya se encuentra en el carrito
         for (let i = 0; i < this.getCarrito.length; i++) {
-          if (
+          if (//getDetails carrito contiene el objeto producto que se atrapa al ingresar a los detalles con el boton detalles
             this.getDetails.productos.id_producto ==
             this.getCarrito[i].productos.id_producto
+            //busca el producto que esta en getDetails y lo busca en el arreglo de productos(objetos) de carrito
           ) {
-            productoRepetido = 1;
+            productoRepetido = 1;// si lo encuentra la variable producto repetido se hace = 1
 
-          } else {productoRepetido = 2;
+          } else {productoRepetido = 2;// si no lo encuentra la viariable producto repetido = 2;
           }
         } //
       }
   
 
-      if (productoRepetido == 1) {
+      if (productoRepetido == 1) {//valida si esta repetido
         sawl("Ya tiene ese producto seleciconado en el carrito", "", "error");
-      } else if(productoRepetido==2) {
+      } else if(productoRepetido==2) {//valida si no esta repetido
         //Todo lo que hara add to carrito
-        //1.peticion que descuenta en stock la cantidad del producto que desea comprar falso esto va en carrito
-        this.Productos.id_producto = this.getDetails.productos.id_producto
-        this.Productos.cantidad_producto = this.Productos.cantidad_producto
+        this.Productos.id_producto = this.getDetails.productos.id_producto//atrapa la id del producto
+        this.Productos.cantidad_producto = this.Productos.cantidad_producto// atrapa la cantidad que selecciono
        
        
-        this.$store.dispatch('Resta_STock',this.Productos)
+        this.$store.dispatch('Resta_STock',this.Productos)//peticion que modifica cantidad del producto
         .then(res=>{
           alert("success")
         }).catch(err=>{
@@ -238,31 +244,67 @@ export default {
         })
         //crear arreglo que almacene id del producto y la cantidad seleccionada
         //despues para eliminar producto se busca el id y el valor borrado
-        alert(this.getDetails.productos.precio_unidad*this.Productos.cantidad_producto)
-        this.setSaldo(this.getDetails.productos.precio_unidad*this.Productos.cantidad_producto)
-        this.setCarrito(this.getDetails);
-        //cuando adihera a carrito debo guardar la id del producto y la cantidad en un json y esto en un arreglo
-        this.cantidadBorrada_idproducto.id_delPoroducto = this.getDetails.productos.id_producto;
-        this.cantidadBorrada_idproducto.cantidad_borrada = this.Productos.cantidad_producto;
-        alert(this.cantidadBorrada_idproducto.id_delPoroducto +  this.cantidadBorrada_idproducto.cantidad_borrada )
-        this.setCantidades(this.cantidadBorrada_idproducto)
 
-        productoRepetido = 0;
+        //guarda el valor del producto multiplicado por la cantidad que selecciono, esto se suma al saldoTotal
+        this.setSaldo(this.getDetails.productos.precio_unidad*this.Productos.cantidad_producto)
+        this.setCarrito(this.getDetails);//IMPORTANTE: ACA SE LLENA EL ARREGLO CARRITO CUANDO PRESIONA ADD CARRITO
+        //cuando adihera a carrito debo guardar la id del producto y la cantidad en un json y esto en un arreglo
+        this.cantidadBorrada_idproducto.id_producto = this.getDetails.productos.id_producto;//Id del producto
+        this.cantidadBorrada_idproducto.cantidad_producto = this.Productos.cantidad_producto;//cantidad que eligio del producto
+        this.setCantidades(this.cantidadBorrada_idproducto)//guarda id del producto y la cantidad que selecciono para comprar
+        this.popToast()//muestra mensaje de un elemento seleccionado
+
+        productoRepetido = 0;//Reinicio la variable del producto repetido 
       }
-        }else{alert('stock vacio o selecciono una cantidad que no existe')}
+        }else{alert('stock vacio o selecciono una cantidad que no existe')}//aca entra si 1. ya selecciono el producto 
+        //2.No selecciono una cantidad, 3.selecciono una cantidad no valida.
       }).catch(err=>{
-        comsole.log(err)
+        console.log(err)
       })
 
      
     
     },
-    onSlideStart(slide) {
+    onSlideStart(slide) {//metodo que causa error que no afecta nada
       this.sliding = true;
     },
-    onSlideEnd(slide) {
+    onSlideEnd(slide) {//metodo que causa error que no afecta nada
       this.sliding = false;
-    }
+    },
+    popToast() {//Toasts
+        // Use a shorter name for this.$createElement
+        const h = this.$createElement
+        // Increment the toast count
+        this.count = this.count + 1
+        this.setContador(this.count)
+        // Create the message
+        const vNodesMsg = h(
+          'p',
+          { class: ['text-center', 'mb-0'] },
+          [
+            h('b-spinner', { props: { type: 'grow', small: true } }),
+            ' Agrego ',
+            h('strong', {}, 'Producto'),
+            ` #${this.getCarrito.length} ${this.getDetails.productos.nombre_producto}`,
+            h('b-spinner', { props: { type: 'grow', small: true } })
+          ]
+        )
+        // Create the title
+        const vNodesTitle = h(
+          'div',
+          { class: ['d-flex', 'flex-grow-1', 'align-items-baseline', 'mr-2'] },
+          [
+            h('strong', { class: 'mr-2' }, 'Carrito de Compras'),
+            h('small', { class: 'ml-auto text-italics' }, '1 minutes ago')
+          ]
+        )
+        // Pass the VNodes as an array for message and title
+        this.$bvToast.toast([vNodesMsg], {
+          title: [vNodesTitle],
+          solid: true,
+          variant: 'info'
+        })
+      },
   },
   computed: {
     ...mapGetters([
@@ -273,7 +315,8 @@ export default {
       "getCount",
       "getCarrito",
       "getCantidadSeleccionada",
-      'getUsername'
+      'getUsername',
+      'getContador'
     ]),
     productos() {
       return this.getDetails.productos.files;
@@ -326,14 +369,5 @@ label:hover ~ label {
 input[type="radio"]:checked ~ label {
   color: orange;
 }
-.card-body img{
-  display:block;
-  width: auto!important;
-  max-width:1024px;
-  max-height:480px;
-  height: auto!important;
-  margin: auto;
-  
-  
-}
+
 </style>

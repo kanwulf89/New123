@@ -104,7 +104,9 @@ components:{
    'setFUllsaldo',
    'BorraElementoCarrito',
    'BorraCantidades',
-   'setUsername'
+   'setUsername',
+   "BorraCompletoCantidades"
+   
   
    
 
@@ -112,15 +114,17 @@ components:{
     this.setFieldProfilename("");
     this.setFUllsaldo(0);
     this.setUsername("")
-    //Aca borrar producto, carrito de compras y detalles
+    //Aca borrar producto, carrito de compras y detalles ESTO PRODUCE UN ERROR DE LAS CANTIDADES DESCONTADAS DE LA BASE DE DATOS
+    
+    //debo crear un metodo que me restaura los valores de las cantidad de los productos seleccionadas cuando se cierre sesion
     for(let i=0; i<this.getCarrito.length; i++ ){
        this.BorraElementoCarrito(i)// aca lo borra
     }
-    for(let i=0; i<this.getCantidadSeleccionada.length;i++){
-      this.BorraCantidades(i)
-    }
+  
+  
     alert("carrito"+this.getCarrito.length)
-
+    this.restauraCantidadesenBasedatos()
+    this.BorraCompletoCantidades([])
     
    
     sawl('Usted cerro su sesion','','success')
@@ -164,17 +168,30 @@ components:{
     }else{swal('Ingrese un nombre de producto','','error')}
   },borraTodo(){
         this.setCarritox("");
-      }
+      },
+      restauraCantidadesenBasedatos(){
+  this.getCantidadSeleccionada.forEach(element => {alert(element.id_producto + element.cantidad_producto)
+    
+    //debo hacer una peticion por cada id y cantidad que esta en el arreglo de objtos, getCantidadesSeleccioanda
+    //con el fin de restuarar esa cantidad si la persona cierra sesion sin haber eliminado productso del carrito
+    this.$store.dispatch('restauraCantidad',element)
+    .then(res=>{
+      alert("success")
+    })
+  });
+}
 },created(){
   this.getCategorias()
   
 },
+
 computed:{
 ...mapGetters([
   'profile',
   'getInfo',
   'getCarrito',
   'getDetails',
+  "getCarrito",
   
   'getCantidadSeleccionada'
 

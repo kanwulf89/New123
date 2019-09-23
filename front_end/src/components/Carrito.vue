@@ -168,7 +168,7 @@ export default {
                             fecha:this.hoyFecha()
                         };
                         
-                        emailjs.send("default_service","test1", data)
+                        emailjs.send("default_service","template_tJpo7VTl", data)
                         .then(function(response) {
                             if(response.text === 'OK'){
                                 alert('El correo se ha enviado de forma exitosa');
@@ -221,12 +221,12 @@ export default {
           for (let i = 0; i < this.getCantidadSeleccionada.length; i++) {
             if (
               j.productos.id_producto ==
-              this.getCantidadSeleccionada[i].id_delPoroducto
+              this.getCantidadSeleccionada[i].id_producto
             ) {
              
               this.cantidades_borradas_de_cada_producto = this.getCantidadSeleccionada[
                 i
-              ].cantidad_borrada;
+              ].cantidad_producto;
             }
           }
 
@@ -249,11 +249,11 @@ export default {
     cantidadProducto(j){//funcion que retorna la cantidad que la persona selecciono
       let posicionArreglo = 0;//variable para gaudar cantidad
       for(let i=0; i<this.getCantidadSeleccionada.length;i++){
-        if(this.getCantidadSeleccionada[i].id_delPoroducto == j.productos.id_producto){//seleccionar la posicion donde esta la cantidad deseada
+        if(this.getCantidadSeleccionada[i].id_producto == j.productos.id_producto){//seleccionar la posicion donde esta la cantidad deseada
           posicionArreglo = i;// guardo la posicion del arreglo
         }
       }
-      return this.getCantidadSeleccionada[posicionArreglo].cantidad_borrada;//imprimo la cantidad
+      return this.getCantidadSeleccionada[posicionArreglo].cantidad_producto;//imprimo la cantidad
     },
       pedidos(){
         
@@ -269,6 +269,7 @@ export default {
        this.GuardaFactura()
        this.enviar()
        this.BotonComprar()
+     
         
      
       }).catch(err=>{
@@ -341,7 +342,8 @@ export default {
     }
     alert(this.getCarrito.length)
       console.log(this.getCarrito.length)
-  },
+  }
+    ,
   computed: {
     ...mapGetters([
       "getProducts",
