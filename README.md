@@ -10,5 +10,5 @@ sqlparse=0.3.0
 
 La parte frond ennd
 
-se debe instalar npm install
+npm install
 
