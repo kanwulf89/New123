@@ -8,6 +8,8 @@ psycopg2=2.8.3
 pytz=2019.1
 sqlparse=0.3.0
 
+se puede instalar todo en un virtualenv de python
+
 La parte frond ennd
 
 npm install
