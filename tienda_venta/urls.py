@@ -3,7 +3,7 @@ from .viewsets import ClienteViewSets
 from .viewsets import ClienteLogin
 from .viewsets import viewjoin
 from .viewsets import OfertaViewSets
-from .viewsets import VistaPrueba,VistaPrueba2,PruebaProducto, PedidoVista, PedidoGuarda,Compra, VistaPrueba3,GuardaFactura
+from .viewsets import VistaPrueba,VistaPrueba2,PruebaProducto, ListaFacturas,PedidoVista, PedidoGuarda,Compra, VistaPrueba3,GuardaFactura
 from .models import Cliente2
 from .serializer import LoginSerializer
 from tienda_almacen.models import Producto 
@@ -24,7 +24,8 @@ router.register('pedido',PedidoVista)
 router.register('guardaPedido',PedidoGuarda)
 router.register('Compras',Compra )
 router.register('test3',VistaPrueba3)
-
+'''Muestra un vendedor con todos los productos que vende y el pedido '''
+router.register('test4',ListaFacturas)
 router.register('guardaF',GuardaFactura)
 
 

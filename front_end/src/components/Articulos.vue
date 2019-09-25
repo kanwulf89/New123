@@ -22,8 +22,10 @@
                             <b-card-text>Precio Unidad:{{i.productos.precio_unidad}}</b-card-text>
                              <b-card-text>Cantidad Producto:{{i.productos.cantidad_producto}}</b-card-text>
                             <template v-if="stockVacio(i)">
+                              <!--
                              <input v-model="manda.cantidad_producto" placeholder="%" >
                              <button class="btn btn-success" @click="CalculaPorcentaje(i)">Descuento</button>
+                             -->
                             </template>
                             <template v-else>
                               <p style="color:red;">Stock vacio</p>

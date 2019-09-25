@@ -105,27 +105,29 @@ components:{
    'BorraElementoCarrito',
    'BorraCantidades',
    'setUsername',
-   "BorraCompletoCantidades"
+   "BorraCompletoCantidades",
+   "setCantidadActual"
    
   
    
 
 ]),deleteUser: function(){
+   this.restauraCantidadesenBasedatos()
     this.setFieldProfilename("");
     this.setFUllsaldo(0);
     this.setUsername("")
+    this.setCantidadActual("")
     //Aca borrar producto, carrito de compras y detalles ESTO PRODUCE UN ERROR DE LAS CANTIDADES DESCONTADAS DE LA BASE DE DATOS
     
-    //debo crear un metodo que me restaura los valores de las cantidad de los productos seleccionadas cuando se cierre sesion
+   
+  
+  
+   
+    this.BorraCompletoCantidades([])
+     //debo crear un metodo que me restaura los valores de las cantidad de los productos seleccionadas cuando se cierre sesion
     for(let i=0; i<this.getCarrito.length; i++ ){
        this.BorraElementoCarrito(i)// aca lo borra
     }
-  
-  
-    alert("carrito"+this.getCarrito.length)
-    this.restauraCantidadesenBasedatos()
-    this.BorraCompletoCantidades([])
-    
    
     sawl('Usted cerro su sesion','','success')
     this.$router.push({path: '/'});
@@ -170,16 +172,33 @@ components:{
         this.setCarritox("");
       },
       restauraCantidadesenBasedatos(){
-  this.getCantidadSeleccionada.forEach(element => {alert(element.id_producto + element.cantidad_producto)
-    
-    //debo hacer una peticion por cada id y cantidad que esta en el arreglo de objtos, getCantidadesSeleccioanda
+//debo hacer un for que me busque si hay elementos en el carrito de compras, si no hay elementos no debo restaurar 
+//nada, si hay algun elemento, eso quiere decir que no elimino algun elemento del carrito por ende debo
+//buscar en el arreglo de cantidad y id dle producto contra carrito para restaurar el producto del carrito que no elimino
+// del carrito de compras
+
+    if(this.getCarrito.length == 0){//no haga nada}
+    }
+    else{
+      for(let i= 0; i<this.getCarrito.length;i++){
+
+         this.getCantidadSeleccionada.forEach(element => {alert(element.id_producto + ""+this.getCarrito[i].productos.id_producto)
+           if(element.id_producto==this.getCarrito[i].productos.id_producto){// si se cumple es porque dejo elementos sin borrar en carrito
+      //debo hacer una peticion por cada id y cantidad que esta en el arreglo de objtos, getCantidadesSeleccioanda
     //con el fin de restuarar esa cantidad si la persona cierra sesion sin haber eliminado productso del carrito
     this.$store.dispatch('restauraCantidad',element)
     .then(res=>{
       alert("success")
     })
+           }else{}
+   
   });
 }
+
+      }
+
+    }
+ 
 },created(){
   this.getCategorias()
   

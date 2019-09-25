@@ -75,6 +75,13 @@ class FacturaSerializer(serializers.ModelSerializer):
 
 '''Crea la tabla para compras y facturas'''
 
+'''Existe una redundancia de datos ya que pasar en el serializer a facturax = su realizer es redundate'''
+'''Por que? porque dentro del modelo factura en el atributo factura con el related_name ya estoy apuntando que todo'''
+'''el modelo de la tabla join2 que contiene id vendedor, idproductos, idpedido, y es una subclase de factura'''
+''' es decir todos los datos del vendedor que vende x productos bajo x pedido va a estar almacenado o anidado '''
+'''sobre una unica factura'''
+
+
 class JoinFalso3(serializers.ModelSerializer):
     vendedor1 = LoginSerializer()
     producto1 = ProductoSerializer()
@@ -85,7 +92,7 @@ class JoinFalso3(serializers.ModelSerializer):
         model = Join2
         fields = ('id','vendedor1','producto1','pedido1','facturax')
 
-'''
+
 class FacturaFull(serializers.ModelSerializer):
     join2 = JoinFalso3(many=True)
 
@@ -99,6 +106,6 @@ class FacturaFull(serializers.ModelSerializer):
                 JoinFalso3.objects.create(facturasx=facturas, **file_data)
             return facturas
 
-'''
+
 
 

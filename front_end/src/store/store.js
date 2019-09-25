@@ -35,9 +35,13 @@ export const store = new Vuex.Store({
     ProductosComprados:[],
     ProductosVendidos:[],
     contador:null, //cuenta el numero de productos ingresado en carrito
+    cantidadActual:null,
    
   },
   getters: {
+    getCantidadActual: state=>{
+      return state.cantidadActual
+    },
     profile: state => {
       return state.profile;
     },
@@ -104,6 +108,9 @@ export const store = new Vuex.Store({
     
   }, 
   mutations: {
+    setCantidadActual:(state,field)=>{
+    state.cantidadActual = field;
+  },
     setVistas: (state,field) =>{
       state.vistas = field;
     }

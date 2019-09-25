@@ -1,5 +1,5 @@
 from rest_framework import viewsets
-from .serializer import Cliente2Serializer, LoginSerializer,OfertaSerializer2,PedidoSerializerGuarda, FacturaSerializer,JoinFalso3,OfertaSerializer, JoinFalso, JoinFalso2, PedidoSerializer
+from .serializer import Cliente2Serializer, LoginSerializer,OfertaSerializer2,FacturaFull,PedidoSerializerGuarda, FacturaSerializer,JoinFalso3,OfertaSerializer, JoinFalso, JoinFalso2, PedidoSerializer
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -73,11 +73,11 @@ class PedidoGuarda(viewsets.ModelViewSet):
 class VistaPrueba3(viewsets.ModelViewSet):
     queryset = Join2.objects.all()
     serializer_class = JoinFalso3
-'''
+
 class ListaFacturas(viewsets.ModelViewSet):
     queryset = Factura2.objects.all()
     
-    serializer_class = FacturaFull'''
+    serializer_class = FacturaFull
 
 class GuardaFactura(viewsets.ModelViewSet):
     queryset = Factura2.objects.all()

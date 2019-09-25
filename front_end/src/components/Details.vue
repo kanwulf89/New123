@@ -49,7 +49,7 @@
             </b-row>
             <b-row>
               <b-col>
-                <b-card-text>Cantidad disponible: {{getDetails.productos.cantidad_producto}}</b-card-text>
+                <b-card-text>Cantidad disponible: {{getCantidadActual}}</b-card-text>
               </b-col>
             </b-row>
             <b-row>
@@ -161,7 +161,7 @@ export default {
     };
   },
   methods: {
-    ...mapMutations(["setCarrito", "setCarritox","setCantidadBorrada","setSaldo","setCantidades","setContador"]),
+    ...mapMutations(["setCarrito", "setCarritox","setCantidadBorrada","setSaldo","setCantidades","setContador","setCantidadActual"]),
     getProfiele() {
       this.profile.frist;
     },
@@ -185,6 +185,7 @@ export default {
       this.$store.dispatch('valida_stock',this.getDetails.productos.id_producto)
       .then(res=>{
         let data = res.data;
+        this.setCantidadActual(res.data.cantidad_producto)
 //valido si la cantidad traida de la base de datos es >0, si la cantidad ingresada es >0 y 
 //si la cantidad ingresada es <= a la cantidad traida de la base de datos
 
@@ -305,28 +306,39 @@ export default {
           variant: 'info'
         })
       },
+     
   },
   computed: {
     ...mapGetters([
       "getDetails",
-      "getPath",
+      
       "getProducts",
       "profile",
       "getCount",
       "getCarrito",
       "getCantidadSeleccionada",
       'getUsername',
-      'getContador'
+      'getContador',
+      "getCantidadActual",
     ]),
     productos() {
       return this.getDetails.productos.files;
     }
-  },
+  }, created(){
+      this.$store.dispatch('valida_stock',this.getDetails.productos.id_producto)
+      .then(res=>{
+        let data = res.data;
+
+        this.setCantidadActual(res.data.cantidad_producto)
+      }).catch(err=>{
+        console.log(err);
+      })
+      },
   name: "Detalles",
   components: {
     Cartas
   },
-  created: {}
+ 
 };
 </script>
 <style>
