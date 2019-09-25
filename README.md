@@ -10,6 +10,8 @@ sqlparse=0.3.0
 
 se puede instalar todo en un virtualenv de python
 
+O usar pip install -r requirements.txt
+
 La parte frond ennd
 
 npm install
