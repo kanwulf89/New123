@@ -1,4 +1,7 @@
 # New123
+Aplicacion creada con Django Rest como Backend.
+Parte Frontend con el framework VUEJS.
+Base de Datos implementada Postgres
 Para correr la aplicacion se debe tener instalado
 La parte backend 
 Django==2.3.3
